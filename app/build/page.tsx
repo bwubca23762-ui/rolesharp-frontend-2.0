@@ -667,7 +667,11 @@ export default function Build() {
   }
 
   async function generate() {
-    if (busy || !reviewRequest) return;
+    if (busy) return;
+    if (!reviewRequest) {
+      reviewDetails();
+      return;
+    }
     setReviewRequest(null);
     setSuggestedJobs([]);
     trackProductEvent("tool_meaningful_start", {
@@ -1282,7 +1286,7 @@ export default function Build() {
         <>
           <div aria-hidden="true" className="h-[4.25rem] lg:hidden" />
           <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--color-border)] bg-[var(--color-surface)]/95 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur-sm lg:hidden dark:border-[var(--color-dark-border)] dark:bg-[var(--color-dark-surface)]/95">
-            <Button fullWidth onClick={reviewDetails} disabled={busy} isLoading={busy}>Review details</Button>
+            <Button fullWidth onClick={generate} disabled={busy} isLoading={busy}>Generate resume</Button>
           </div>
         </>
       )}

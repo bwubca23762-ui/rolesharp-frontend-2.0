@@ -77,7 +77,7 @@ export default function TemplateCatalog() {
 
   return (
     <div>
-      <fieldset className="mb-5 min-w-0 border-0 p-0">
+      <fieldset aria-label="Filter resume templates" className="mb-5 min-w-0 border-0 p-0">
         <legend className="mb-2 text-sm font-semibold">Filter resume templates</legend>
         <div className="flex flex-wrap gap-x-4 gap-y-1 border-b border-[var(--border)]">
           {CATEGORIES.map((item) => (
@@ -93,7 +93,7 @@ export default function TemplateCatalog() {
         </div>
       </fieldset>
 
-      <div className="desk-template-layout">
+      <div role="dialog" aria-label="Resume template details and preview" className="desk-template-layout">
         <figure className="desk-template-stage">
           <Image src={`/templates/${selected.engineId}.webp`} alt={`Sample resume in the ${selected.name} template`} width={460} height={650} sizes="(max-width: 767px) 85vw, 460px" priority />
           <figcaption><SampleProvenance status="fictional" detail="This example shows the layout." className="mt-3 justify-center" /></figcaption>

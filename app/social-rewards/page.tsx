@@ -34,8 +34,8 @@ export default function SocialRewardsPage() {
           />
           <div className="grid gap-3 sm:grid-cols-3">
             <Card variant="outline" padding="sm" as="article"><Coins size={18} className="text-[var(--primary)]" /><strong className="mt-2 block">Channel credits</strong><span className="mt-1 block text-sm text-[var(--muted-fg)]">One reward per channel, credited when your claim is approved.</span></Card>
-            <Card variant="outline" padding="sm" as="article"><Check size={18} className="text-[var(--primary)]" /><strong className="mt-2 block">You choose the start</strong><span className="mt-1 block text-sm text-[var(--muted-fg)]">The Daily Matches timer starts only when you activate it.</span></Card>
-            <Card variant="outline" padding="sm" as="article"><Shield size={18} className="text-[var(--primary)]" /><strong className="mt-2 block">What we ask for</strong><span className="mt-1 block text-sm text-[var(--muted-fg)]">You confirm each follow yourself. We never ask for a card or inbox access.</span></Card>
+            <Card variant="outline" padding="sm" as="article"><Check size={18} className="text-[var(--primary)]" /><strong className="mt-2 block">You choose the start</strong><span className="mt-1 block text-sm text-[var(--muted-fg)]">The free Daily Matches trial starts only when you choose to activate it.</span></Card>
+            <Card variant="outline" padding="sm" as="article"><Shield size={18} className="text-[var(--primary)]" /><strong className="mt-2 block">What we ask for</strong><span className="mt-1 block text-sm text-[var(--muted-fg)]">You confirm each follow yourself (self-attested, not independently verified). We never ask for a card or inbox access.</span></Card>
           </div>
         </Container>
       </header>

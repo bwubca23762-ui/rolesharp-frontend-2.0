@@ -7,7 +7,11 @@ import { join } from "node:path";
 import { connect } from "node:net";
 import { once } from "node:events";
 
-test("ops inventory lists only regular encrypted snapshots and accepts no caller path", { timeout: 15000 }, async () => {
+test("ops inventory lists only regular encrypted snapshots and accepts no caller path", { timeout: 15000 }, async (t) => {
+  if (process.platform === "win32") {
+    t.skip("UNIX domain socket and unprivileged symlinks not supported on win32");
+    return;
+  }
   const directory = await mkdtemp(join(tmpdir(), "rs-ops-inventory-"));
   const backups = join(directory, "backups");
   const socket = join(directory, "ops.sock");

@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   // Playwright development runs use a separate disposable cache so switching
   // between `next build`/`next start` and `next dev` cannot mix incompatible
   // manifests or chunks in `.next`.
-  distDir: new Set([".next", ".next-playwright", ".next-qa-build", ".next-frontend-review"]).has(process.env.JOBS_QA_DIST_DIR ?? "")
+  distDir: (new Set([".next", ".next-playwright", ".next-qa-build"]).has(process.env.JOBS_QA_DIST_DIR ?? "") || process.env.JOBS_QA_DIST_DIR === ".next-frontend-review")
     ? process.env.JOBS_QA_DIST_DIR
     : ".next",
   reactStrictMode: true,

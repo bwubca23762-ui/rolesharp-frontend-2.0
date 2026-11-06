@@ -132,7 +132,7 @@ export default function StudentsPage() {
               What you get
             </h2>
             <p className="text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-muted)]">
-              Student Premium includes the tools below. Paid Premium adds Word export, tool history, and full-market Daily Matches.
+              Student Premium includes every Premium feature except editable Word export, tool history, and full-market Daily Matches.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -28,7 +28,7 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: "/",
     display: "standalone",
     background_color: "#f7f9fc",
-    theme_color: "#f7f9fc",
+    theme_color: "#061426",
     icons: [
       // Both purposes point at the same file deliberately: `maskable` lets
       // Android crop to its adaptive-icon shape, and shipping only `any` gets

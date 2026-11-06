@@ -68,7 +68,7 @@ export function Button(props: ButtonProps) {
   } = props;
 
   const className = [
-    "inline-flex items-center justify-center gap-2 text-center font-semibold select-none transition-colors duration-150 ease-out motion-reduce:transition-none",
+    "inline-flex items-center justify-center gap-2 text-center font-semibold select-none transition-colors duration-150 ease-out active:translate-y-px motion-reduce:transform-none motion-reduce:transition-none",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)]",
     variantClasses[variant],
     sizeClasses[size],
