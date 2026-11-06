@@ -1,0 +1,52 @@
+/* Route-scoped workflow operations styles. Keep these out of the legacy
+   compatibility bundle that every public page downloads. */
+.admin-workflow-link-card { display:flex; align-items:center; gap:18px; margin-bottom:16px; padding:16px 18px; border:1px solid color-mix(in srgb,var(--primary) 18%,var(--border)); border-radius:14px; background:linear-gradient(100deg,color-mix(in srgb,var(--primary) 6%,var(--surface)),var(--surface)); }
+.admin-workflow-link-card > div { min-width:0; flex:1; }
+.admin-workflow-link-card b { color:var(--fg); font-size:13px; }
+.admin-workflow-link-card p { margin:3px 0 0; color:var(--muted-fg); font-size:11px; line-height:1.45; }
+.admin-workflow-link-card > a { flex:0 0 auto; }
+.admin-workflow-loading { padding:28px; color:var(--muted-fg); font-size:12px; }
+.admin-workflow-safety { display:flex; align-items:center; gap:13px; margin-bottom:22px; padding:15px 17px; border:1px solid color-mix(in srgb,var(--success) 24%,var(--border)); border-radius:14px; background:color-mix(in srgb,var(--success) 5%,var(--surface)); }
+.admin-workflow-safety > span { display:grid; width:38px; height:38px; flex:0 0 auto; place-items:center; border-radius:11px; background:color-mix(in srgb,var(--success) 12%,var(--surface)); color:var(--success); }
+.admin-workflow-safety > div { min-width:0; flex:1; }
+.admin-workflow-safety h2 { margin:0; color:var(--fg); font-size:13px; }
+.admin-workflow-safety p { margin:3px 0 0; color:var(--muted-fg); font-size:10.5px; line-height:1.5; }
+.admin-workflow-safety > a { display:flex; align-items:center; gap:3px; color:var(--primary); font-size:10px; font-weight:800; text-decoration:none; white-space:nowrap; }
+.admin-workflow-gates { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:11px; margin-bottom:22px; }
+.admin-workflow-gate { display:grid; min-width:0; grid-template-columns:auto minmax(0,1fr); gap:10px; align-items:start; padding:15px; border:1px solid var(--border); border-radius:14px; background:var(--surface); box-shadow:var(--shadow-sm); }
+.admin-workflow-gate > span { display:grid; width:34px; height:34px; place-items:center; border-radius:10px; }
+.admin-workflow-gate > span.is-active { background:color-mix(in srgb,var(--success) 12%,var(--surface)); color:var(--success); }
+.admin-workflow-gate > span.is-locked { background:var(--muted-bg); color:var(--muted-fg); }
+.admin-workflow-gate h3 { margin:1px 0 0; color:var(--fg); font-size:11px; }
+.admin-workflow-gate p { margin:4px 0 0; color:var(--muted-fg); font-size:9.5px; line-height:1.45; }
+.admin-workflow-gate > strong { grid-column:1/-1; width:max-content; max-width:100%; }
+.admin-workflow-warnings .admin-priority-list > div { display:flex; align-items:flex-start; gap:9px; padding:10px 12px; border:1px solid var(--border); border-radius:11px; color:var(--fg); }
+.admin-workflow-warnings .admin-priority-list > div svg { margin-top:1px; flex:0 0 auto; color:var(--warning); }
+.admin-workflow-warnings .admin-priority-list > div.danger svg { color:var(--danger); }
+.admin-workflow-warnings .admin-priority-list > div b { font-size:10.5px; line-height:1.45; }
+.admin-workflow-metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-bottom:16px; }
+.admin-workflow-metrics article { display:flex; min-width:0; align-items:flex-start; gap:11px; padding:16px; border:1px solid var(--border); border-radius:14px; background:var(--surface); box-shadow:var(--shadow-sm); }
+.admin-workflow-metrics article > span { display:grid; width:37px; height:37px; flex:0 0 auto; place-items:center; border-radius:11px; background:var(--muted-bg); color:var(--primary); }
+.admin-workflow-metrics article > div { display:grid; min-width:0; }
+.admin-workflow-metrics small { color:var(--muted-fg); font-size:9px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; }
+.admin-workflow-metrics strong { margin-top:2px; color:var(--fg); font-size:22px; letter-spacing:-.03em; }
+.admin-workflow-metrics p { margin:3px 0 0; overflow:hidden; color:var(--text-faint); font-size:9px; text-overflow:ellipsis; white-space:nowrap; }
+.admin-workflow-tables { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.admin-workflow-table-heading { display:flex; align-items:center; gap:9px; padding:15px 17px; border-bottom:1px solid var(--divider); color:var(--primary); }
+.admin-workflow-table-heading > div { display:grid; }
+.admin-workflow-table-heading h2 { margin:0; color:var(--fg); font-size:12px; }
+.admin-workflow-table-heading p { margin:2px 0 0; color:var(--muted-fg); font-size:9.5px; }
+.admin-workflow-unavailable { margin:0; padding:18px; color:var(--muted-fg); font-size:10.5px; line-height:1.5; }
+.admin-workflow-timestamp { margin:14px 2px 0; color:var(--text-faint); font-size:9.5px; line-height:1.5; }
+
+@media (max-width:1180px) {
+  .admin-workflow-gates { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+
+@media (max-width:720px) {
+  .admin-workflow-link-card { display:grid; grid-template-columns:minmax(0,1fr); align-items:start; }
+  .admin-workflow-link-card > a { justify-self:start; margin-left:0; max-width:100%; }
+  .admin-workflow-safety { align-items:flex-start; flex-wrap:wrap; }
+  .admin-workflow-safety > a { margin-left:51px; }
+  .admin-workflow-gates, .admin-workflow-metrics, .admin-workflow-tables { grid-template-columns:1fr; }
+}

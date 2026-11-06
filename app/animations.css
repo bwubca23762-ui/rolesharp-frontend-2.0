@@ -1,0 +1,439 @@
+/* ============================================================
+   Motion system — page-enter, card-stagger, score-pop, row-flash
+   ============================================================
+   Purpose: a small, token-driven motion vocabulary shared across
+   dashboard, application queue, admin analytics, and jobs finder.
+   Design rules enforced here:
+     1. Every animation uses the existing --ease-out-expo curve so
+        motion stays consistent with the rest of the product.
+     2. Animations are entrance-only and never hide content: the
+        pre-animation state is a small opacity dip + lift, and the
+        element resolves to its final state via CSS. If JS fails or
+        the animation is skipped, content is still visible because
+        the resting state is the authored markup.
+     3. Under prefers-reduced-motion: reduce, all transforms and
+        opacity transitions are neutralized so nothing flashes or
+        shifts. Content is shown immediately at full opacity.
+   ============================================================ */
+
+/* --- Entrance keyframes ------------------------------------- */
+/* Kept independent of the legacy compat keyframes so this module
+   can be imported without pulling the 5.8k-line compatibility sheet. */
+
+@keyframes rs-page-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rs-card-stagger {
+  from { opacity: 0; transform: translateY(12px) scale(0.992); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes rs-score-pop {
+  0%   { transform: scale(0.94); }
+  60%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@keyframes rs-row-flash {
+  0%   { background-color: var(--color-primary-50); }
+  100% { background-color: transparent; }
+}
+
+/* --- Utility classes ---------------------------------------- */
+
+/* Page-level entrance. Applied to the route shell wrapper so the
+   whole view eases in once per navigation. Never applied to
+   client-interactive controls. */
+.rs-page-enter {
+  animation: rs-page-enter 200ms var(--ease-out-expo) both;
+}
+
+/* Card / item stagger container. Children opt in with --rs-stagger-i;
+   the index is set inline by the rendering loop. Keeping the delay
+   on the child (not a long nth-child chain) means stagger works for
+   lists whose order is data-driven, not source-driven. */
+.rs-stagger > * {
+  animation: rs-card-stagger 300ms var(--ease-out-expo) both;
+  animation-delay: calc(min(var(--rs-stagger-i, 0), 8) * 60ms);
+}
+
+/* Score ring pop — applied to the ScoreRing wrapper, not the SVG,
+   so it complements (not overrides) the existing stroke-dashoffset
+   transition already authored in components/ui/ScoreRing.tsx. */
+.rs-score-pop {
+  animation: rs-score-pop 200ms var(--ease-out-expo) both;
+}
+
+/* Row flash — highlight a freshly added/updated table row without
+   trapping attention. Transparent end state means no leftover tint. */
+.rs-row-flash {
+  animation: rs-row-flash 900ms var(--ease-out-expo) both;
+}
+
+/* ============================================================
+   Scroll-reveal system
+   ============================================================
+   Elements with .rs-reveal start hidden (opacity 0, slight lift).
+   The ScrollReveal component adds .rs-reveal-in when they enter the
+   viewport. If JS never runs, a fallback CSS rule sets opacity 1
+   after a short delay so content is never permanently hidden.
+   ============================================================ */
+
+.rs-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 620ms var(--ease-out-expo),
+    transform 620ms var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+
+.rs-reveal-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Directional reveal variants */
+.rs-reveal-left {
+  opacity: 0;
+  transform: translateX(-32px);
+  transition: opacity 620ms var(--ease-out-expo), transform 620ms var(--ease-out-expo);
+}
+.rs-reveal-left.rs-reveal-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.rs-reveal-right {
+  opacity: 0;
+  transform: translateX(32px);
+  transition: opacity 620ms var(--ease-out-expo), transform 620ms var(--ease-out-expo);
+}
+.rs-reveal-right.rs-reveal-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.rs-reveal-scale {
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 620ms var(--ease-out-expo), transform 620ms var(--ease-out-expo);
+}
+.rs-reveal-scale.rs-reveal-in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Staggered children — set --rs-reveal-delay on each child */
+.rs-reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 540ms var(--ease-out-expo),
+    transform 540ms var(--ease-out-expo);
+  transition-delay: calc(min(var(--rs-reveal-delay, 0), 10) * 80ms);
+}
+.rs-reveal-stagger.rs-reveal-in > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fallback: if JS never adds .rs-reveal-in, show content after 2s */
+@keyframes rs-reveal-fallback {
+  to { opacity: 1; transform: none; }
+}
+.rs-reveal:not(.rs-reveal-in),
+.rs-reveal-left:not(.rs-reveal-in),
+.rs-reveal-right:not(.rs-reveal-in),
+.rs-reveal-scale:not(.rs-reveal-in),
+.rs-reveal-stagger:not(.rs-reveal-in) > * {
+  animation: rs-reveal-fallback 0ms 2s forwards;
+}
+
+/* ============================================================
+   Gradient shimmer — for skeleton loading and decorative accents
+   ============================================================ */
+
+@keyframes rs-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.rs-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--color-primary) 6%, transparent) 40%,
+    color-mix(in oklab, var(--color-brand-amber) 10%, transparent) 50%,
+    color-mix(in oklab, var(--color-primary) 6%, transparent) 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: rs-shimmer 1.8s linear infinite;
+}
+
+/* ============================================================
+   Gradient text — animated brand gradient
+   ============================================================ */
+
+@keyframes rs-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+.rs-text-gradient {
+  background: linear-gradient(
+    100deg,
+    var(--color-primary),
+    var(--color-brand-amber-solid) 50%,
+    var(--color-primary)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rs-gradient-shift 4s var(--ease-out-expo) infinite;
+}
+
+[data-theme="dark"] .rs-text-gradient {
+  background: linear-gradient(
+    100deg,
+    var(--color-primary-hover),
+    var(--color-brand-amber) 50%,
+    var(--color-primary-hover)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================================
+   Spotlight cursor — radial gradient follows mouse on cards
+   ============================================================ */
+
+.rs-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.rs-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  background: radial-gradient(
+    400px circle at var(--rs-spot-x, 50%) var(--rs-spot-y, 50%),
+    color-mix(in oklab, var(--color-primary) 12%, transparent),
+    transparent 40%
+  );
+  transition: opacity 300ms var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.rs-spotlight:hover::before {
+  opacity: 1;
+}
+
+.rs-spotlight > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   Floating animation — gentle Y-axis bob for decorative elements
+   ============================================================ */
+
+@keyframes rs-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+.rs-float {
+  animation: rs-float 4s ease-in-out infinite;
+}
+
+.rs-float-slow {
+  animation: rs-float 7s ease-in-out infinite;
+}
+
+/* ============================================================
+   Pulse glow — subtle pulsing border for CTA elements
+   ============================================================ */
+
+@keyframes rs-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-primary) 30%, transparent); }
+  50%      { box-shadow: 0 0 0 6px color-mix(in oklab, var(--color-primary) 0%, transparent); }
+}
+
+.rs-pulse-glow {
+  animation: rs-pulse-glow 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   Animated underline — links and nav items
+   ============================================================ */
+
+.rs-underline-anim {
+  position: relative;
+}
+
+.rs-underline-anim::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 280ms var(--ease-out-expo);
+}
+
+.rs-underline-anim:hover::after,
+.rs-underline-anim:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ============================================================
+   Count-in — for number displays (score, stats)
+   ============================================================ */
+
+@keyframes rs-count-in {
+  0%   { opacity: 0; transform: translateY(8px) scale(0.9); }
+  60%  { opacity: 1; transform: translateY(0) scale(1.05); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.rs-count-in {
+  animation: rs-count-in 480ms var(--ease-out-expo) both;
+}
+
+/* ============================================================
+   Premium border — animated conic gradient border for featured cards
+   ============================================================ */
+
+@keyframes rs-border-rotate {
+  to { transform: rotate(360deg); }
+}
+
+.rs-premium-border {
+  position: relative;
+  isolation: isolate;
+}
+
+.rs-premium-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    var(--color-primary),
+    var(--color-brand-amber-solid),
+    var(--color-primary),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 400ms var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.rs-premium-border:hover::before {
+  opacity: 1;
+  animation: rs-border-rotate 3s linear infinite;
+}
+
+/* ============================================================
+   Grid pattern — animated background grid for hero sections
+   ============================================================ */
+
+@keyframes rs-grid-drift {
+  0%   { background-position: 0 0; }
+  100% { background-position: 52px 52px; }
+}
+
+.rs-grid-bg {
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--color-border) 30%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--color-border) 30%, transparent) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+
+.rs-grid-bg-animated {
+  animation: rs-grid-drift 20s linear infinite;
+}
+
+/* ============================================================
+   Blur orbs — decorative floating gradient blobs
+   ============================================================ */
+
+@keyframes rs-orb-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(30px, -20px) scale(1.1); }
+  66%      { transform: translate(-20px, 15px) scale(0.95); }
+}
+
+@keyframes rs-orb-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(-25px, 20px) scale(1.05); }
+  66%      { transform: translate(20px, -15px) scale(1.1); }
+}
+
+.rs-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.rs-orb-1 {
+  animation: rs-orb-drift-1 12s ease-in-out infinite;
+}
+
+.rs-orb-2 {
+  animation: rs-orb-drift-2 16s ease-in-out infinite;
+}
+
+/* ============================================================
+   Reduced motion guard (extended)
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .rs-page-enter,
+  .rs-stagger > *,
+  .rs-score-pop,
+  .rs-row-flash,
+  .rs-shimmer,
+  .rs-text-gradient,
+  .rs-float,
+  .rs-float-slow,
+  .rs-pulse-glow,
+  .rs-count-in,
+  .rs-premium-border::before,
+  .rs-grid-bg-animated,
+  .rs-orb-1,
+  .rs-orb-2 {
+    animation: none !important;
+  }
+
+  .rs-reveal,
+  .rs-reveal-left,
+  .rs-reveal-right,
+  .rs-reveal-scale,
+  .rs-reveal-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .rs-spotlight::before {
+    display: none;
+  }
+}

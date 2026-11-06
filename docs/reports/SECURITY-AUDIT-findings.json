@@ -1,0 +1,1227 @@
+{
+  "documentType": "codex-security.findings",
+  "findings": [
+    {
+      "attackPath": {
+        "dataflow": {
+          "outcome": "An authenticated user can change the canonical email to an unowned address; the Google callback later treats an email match as proof of ownership and issues a session.",
+          "sink": "app/api/account/email/route.ts:33",
+          "source": "attacker-controlled request or stored value"
+        },
+        "reachability": {
+          "attacker": "remote user or anonymous client",
+          "outcome": "An authenticated user can change the canonical email to an unowned address; the Google callback later treats an email match as proof of ownership and issues a session.",
+          "preconditions": "route/deployment preconditions described in summary"
+        }
+      },
+      "codeEvidence": [
+        {
+          "code": "An authenticated user can change the canonical email to an unowned address; the Google callback later treats an email match as proof of ownership and issues a session.",
+          "endLine": 35,
+          "explanation": "An authenticated user can change the canonical email to an unowned address; the Google callback later treats an email match as proof of ownership and issues a session.",
+          "id": "e1",
+          "label": "source-to-control",
+          "language": "typescript",
+          "path": "app/api/account/email/route.ts",
+          "role": "root_cause",
+          "startLine": 33
+        }
+      ],
+      "confidence": {
+        "level": "high",
+        "rationale": "Direct source, sink, and deployment evidence were reviewed; remaining uncertainty is limited to runtime preconditions."
+      },
+      "extensions": {
+        "candidateId": "account-email-google-prehijack"
+      },
+      "findingId": "csf_dd12a9cda600daed2727e17f",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:46a0d37594a55b862d30f7cac98d58583b8c032af9c630286432b20a9d6fb5b1"
+      },
+      "identity": {
+        "anchor": "account-email-google-prehijack"
+      },
+      "locations": [
+        {
+          "endLine": 35,
+          "path": "app/api/account/email/route.ts",
+          "role": "root_control",
+          "startLine": 33
+        },
+        {
+          "endLine": 52,
+          "path": "app/api/auth/google/callback/route.ts",
+          "role": "sink",
+          "startLine": 43
+        }
+      ],
+      "occurrenceId": "occ_d73e1674892e09692068b89b",
+      "preventiveControls": [
+        "Enforce unique database constraints for identity bindings.",
+        "Treat proxy-derived headers as trusted only after origin restriction."
+      ],
+      "provenance": {
+        "source": "repository-wide-security-scan"
+      },
+      "remediation": "Apply an atomic authorization or resource-boundary check at the stated root control; add regression tests for concurrent, stale-token, direct-origin, and malformed-input cases as applicable.",
+      "remediationTests": [
+        "Add a regression test reproducing the source-to-sink path.",
+        "Add concurrency and failure-injection tests where state is claimed or quota is spent."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "e1"
+        ],
+        "summary": "An authenticated user can change the canonical email to an unowned address; the Google callback later treats an email match as proof of ownership and issues a session."
+      },
+      "ruleId": "authorization.account-email-link",
+      "severity": {
+        "changeConditions": "Raise severity if production evidence shows broader reachability or lower it if the stated deployment precondition is absent.",
+        "level": "high",
+        "rationale": "An authenticated user can change the canonical email to an unowned address; the Google callback later treats an email match as proof of ownership and issues a session.",
+        "score": 8.0,
+        "scoringSystem": "CVSS:3.1"
+      },
+      "summary": "An authenticated user can change the canonical email to an unowned address; the Google callback later treats an email match as proof of ownership and issues a session.",
+      "taxonomy": {
+        "category": "authorization/account-email-link",
+        "cwe": [
+          "CWE-287"
+        ]
+      },
+      "title": "Unverified email changes can pre-link an account to another person\u2019s Google identity",
+      "validation": {
+        "conclusion": "survives validation as reportable",
+        "evidenceRefs": [
+          "e1"
+        ],
+        "method": "full-file source review plus targeted deployment/runtime checks"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": {
+          "outcome": "The verification helper returns a token record and the route issues a session even when the guarded current-email update affected zero rows.",
+          "sink": "app/api/auth/verify-email/route.ts:19",
+          "source": "attacker-controlled request or stored value"
+        },
+        "reachability": {
+          "attacker": "remote user or anonymous client",
+          "outcome": "The verification helper returns a token record and the route issues a session even when the guarded current-email update affected zero rows.",
+          "preconditions": "route/deployment preconditions described in summary"
+        }
+      },
+      "codeEvidence": [
+        {
+          "code": "The verification helper returns a token record and the route issues a session even when the guarded current-email update affected zero rows.",
+          "endLine": 21,
+          "explanation": "The verification helper returns a token record and the route issues a session even when the guarded current-email update affected zero rows.",
+          "id": "e1",
+          "label": "source-to-control",
+          "language": "typescript",
+          "path": "app/api/auth/verify-email/route.ts",
+          "role": "root_cause",
+          "startLine": 19
+        }
+      ],
+      "confidence": {
+        "level": "high",
+        "rationale": "Direct source, sink, and deployment evidence were reviewed; remaining uncertainty is limited to runtime preconditions."
+      },
+      "extensions": {
+        "candidateId": "stale-email-token-authenticates-account"
+      },
+      "findingId": "csf_4b6d8c207b300dba7af71ac0",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:fd105df9e45f4fcd1746867d1ebdaf06e40b97fff2f14459ebf7c872963a206e"
+      },
+      "identity": {
+        "anchor": "stale-email-token-authenticates-account"
+      },
+      "locations": [
+        {
+          "endLine": 21,
+          "path": "app/api/auth/verify-email/route.ts",
+          "role": "root_control",
+          "startLine": 19
+        },
+        {
+          "endLine": 48,
+          "path": "lib/email-verification.ts",
+          "role": "broken_control",
+          "startLine": 43
+        }
+      ],
+      "occurrenceId": "occ_66ffa67218ebafbc820cb401",
+      "preventiveControls": [
+        "Enforce unique database constraints for identity bindings.",
+        "Treat proxy-derived headers as trusted only after origin restriction."
+      ],
+      "provenance": {
+        "source": "repository-wide-security-scan"
+      },
+      "remediation": "Apply an atomic authorization or resource-boundary check at the stated root control; add regression tests for concurrent, stale-token, direct-origin, and malformed-input cases as applicable.",
+      "remediationTests": [
+        "Add a regression test reproducing the source-to-sink path.",
+        "Add concurrency and failure-injection tests where state is claimed or quota is spent."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "e1"
+        ],
+        "summary": "The verification helper returns a token record and the route issues a session even when the guarded current-email update affected zero rows."
+      },
+      "ruleId": "authentication.stale-email-token",
+      "severity": {
+        "changeConditions": "Raise severity if production evidence shows broader reachability or lower it if the stated deployment precondition is absent.",
+        "level": "high",
+        "rationale": "The verification helper returns a token record and the route issues a session even when the guarded current-email update affected zero rows.",
+        "score": 8.0,
+        "scoringSystem": "CVSS:3.1"
+      },
+      "summary": "The verification helper returns a token record and the route issues a session even when the guarded current-email update affected zero rows.",
+      "taxonomy": {
+        "category": "authentication/stale-email-token",
+        "cwe": [
+          "CWE-287"
+        ]
+      },
+      "title": "A stale verification token can authenticate an account after its email changes",
+      "validation": {
+        "conclusion": "survives validation as reportable",
+        "evidenceRefs": [
+          "e1"
+        ],
+        "method": "full-file source review plus targeted deployment/runtime checks"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": {
+          "outcome": "The limiter trusts CF-Connecting-IP from the request, while the public nginx origin does not overwrite it or restrict traffic to Cloudflare.",
+          "sink": "lib/rate-limit.ts:10",
+          "source": "attacker-controlled request or stored value"
+        },
+        "reachability": {
+          "attacker": "remote user or anonymous client",
+          "outcome": "The limiter trusts CF-Connecting-IP from the request, while the public nginx origin does not overwrite it or restrict traffic to Cloudflare.",
+          "preconditions": "route/deployment preconditions described in summary"
+        }
+      },
+      "codeEvidence": [
+        {
+          "code": "The limiter trusts CF-Connecting-IP from the request, while the public nginx origin does not overwrite it or restrict traffic to Cloudflare.",
+          "endLine": 12,
+          "explanation": "The limiter trusts CF-Connecting-IP from the request, while the public nginx origin does not overwrite it or restrict traffic to Cloudflare.",
+          "id": "e1",
+          "label": "source-to-control",
+          "language": "typescript",
+          "path": "lib/rate-limit.ts",
+          "role": "root_cause",
+          "startLine": 10
+        }
+      ],
+      "confidence": {
+        "level": "high",
+        "rationale": "Direct source, sink, and deployment evidence were reviewed; remaining uncertainty is limited to runtime preconditions."
+      },
+      "extensions": {
+        "candidateId": "direct-origin-cf-header-rate-limit-bypass"
+      },
+      "findingId": "csf_13c6ea0982bc6c9c83e48332",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:503ddae9b6e760d15cd7af4cda6b70636537a175115bef9bd0126d7988948f1f"
+      },
+      "identity": {
+        "anchor": "direct-origin-cf-header-rate-limit-bypass"
+      },
+      "locations": [
+        {
+          "endLine": 12,
+          "path": "lib/rate-limit.ts",
+          "role": "root_control",
+          "startLine": 10
+        },
+        {
+          "endLine": 43,
+          "path": "deploy/nginx-site.conf",
+          "role": "deployment_control",
+          "startLine": 36
+        }
+      ],
+      "occurrenceId": "occ_93709bb522428acfe6250c66",
+      "preventiveControls": [
+        "Enforce unique database constraints for identity bindings.",
+        "Treat proxy-derived headers as trusted only after origin restriction."
+      ],
+      "provenance": {
+        "source": "repository-wide-security-scan"
+      },
+      "remediation": "Apply an atomic authorization or resource-boundary check at the stated root control; add regression tests for concurrent, stale-token, direct-origin, and malformed-input cases as applicable.",
+      "remediationTests": [
+        "Add a regression test reproducing the source-to-sink path.",
+        "Add concurrency and failure-injection tests where state is claimed or quota is spent."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "e1"
+        ],
+        "summary": "The limiter trusts CF-Connecting-IP from the request, while the public nginx origin does not overwrite it or restrict traffic to Cloudflare."
+      },
+      "ruleId": "availability.rate-limit-origin-spoof",
+      "severity": {
+        "changeConditions": "Raise severity if production evidence shows broader reachability or lower it if the stated deployment precondition is absent.",
+        "level": "medium",
+        "rationale": "The limiter trusts CF-Connecting-IP from the request, while the public nginx origin does not overwrite it or restrict traffic to Cloudflare.",
+        "score": 6.2,
+        "scoringSystem": "CVSS:3.1"
+      },
+      "summary": "The limiter trusts CF-Connecting-IP from the request, while the public nginx origin does not overwrite it or restrict traffic to Cloudflare.",
+      "taxonomy": {
+        "category": "availability/rate-limit-origin-spoof",
+        "cwe": [
+          "CWE-807"
+        ]
+      },
+      "title": "Direct-origin clients can forge CF-Connecting-IP and bypass application rate limits",
+      "validation": {
+        "conclusion": "survives validation as reportable",
+        "evidenceRefs": [
+          "e1"
+        ],
+        "method": "full-file source review plus targeted deployment/runtime checks"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": {
+          "outcome": "Only compressed request bytes are bounded; Mammoth and the first JavaScript PDF parser have no decompressed-size, output-size, timeout, or isolation limit.",
+          "sink": "app/api/check-resume/upload/route.ts:112",
+          "source": "attacker-controlled request or stored value"
+        },
+        "reachability": {
+          "attacker": "remote user or anonymous client",
+          "outcome": "Only compressed request bytes are bounded; Mammoth and the first JavaScript PDF parser have no decompressed-size, output-size, timeout, or isolation limit.",
+          "preconditions": "route/deployment preconditions described in summary"
+        }
+      },
+      "codeEvidence": [
+        {
+          "code": "Only compressed request bytes are bounded; Mammoth and the first JavaScript PDF parser have no decompressed-size, output-size, timeout, or isolation limit.",
+          "endLine": 114,
+          "explanation": "Only compressed request bytes are bounded; Mammoth and the first JavaScript PDF parser have no decompressed-size, output-size, timeout, or isolation limit.",
+          "id": "e1",
+          "label": "source-to-control",
+          "language": "typescript",
+          "path": "app/api/check-resume/upload/route.ts",
+          "role": "root_cause",
+          "startLine": 112
+        }
+      ],
+      "confidence": {
+        "level": "medium",
+        "rationale": "Direct source, sink, and deployment evidence were reviewed; remaining uncertainty is limited to runtime preconditions."
+      },
+      "extensions": {
+        "candidateId": "resume-upload-parser-bomb"
+      },
+      "findingId": "csf_7eb63ddd5b1d6153e8de7c3b",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:cc9a38e1516aa67c645576a3fcad44714de0fb8116eda8ef2ae922231afcbd34"
+      },
+      "identity": {
+        "anchor": "resume-upload-parser-bomb"
+      },
+      "locations": [
+        {
+          "endLine": 114,
+          "path": "app/api/check-resume/upload/route.ts",
+          "role": "root_control",
+          "startLine": 112
+        }
+      ],
+      "occurrenceId": "occ_b53dfa46824b924d55742b2f",
+      "preventiveControls": [
+        "Enforce unique database constraints for identity bindings.",
+        "Treat proxy-derived headers as trusted only after origin restriction."
+      ],
+      "provenance": {
+        "source": "repository-wide-security-scan"
+      },
+      "remediation": "Apply an atomic authorization or resource-boundary check at the stated root control; add regression tests for concurrent, stale-token, direct-origin, and malformed-input cases as applicable.",
+      "remediationTests": [
+        "Add a regression test reproducing the source-to-sink path.",
+        "Add concurrency and failure-injection tests where state is claimed or quota is spent."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "e1"
+        ],
+        "summary": "Only compressed request bytes are bounded; Mammoth and the first JavaScript PDF parser have no decompressed-size, output-size, timeout, or isolation limit."
+      },
+      "ruleId": "availability.upload-parser-bomb",
+      "severity": {
+        "changeConditions": "Raise severity if production evidence shows broader reachability or lower it if the stated deployment precondition is absent.",
+        "level": "medium",
+        "rationale": "Only compressed request bytes are bounded; Mammoth and the first JavaScript PDF parser have no decompressed-size, output-size, timeout, or isolation limit.",
+        "score": 6.2,
+        "scoringSystem": "CVSS:3.1"
+      },
+      "summary": "Only compressed request bytes are bounded; Mammoth and the first JavaScript PDF parser have no decompressed-size, output-size, timeout, or isolation limit.",
+      "taxonomy": {
+        "category": "availability/upload-parser-bomb",
+        "cwe": [
+          "CWE-409"
+        ]
+      },
+      "title": "Compressed DOCX and PDF uploads can consume unbounded parser resources",
+      "validation": {
+        "conclusion": "survives validation as reportable",
+        "evidenceRefs": [
+          "e1"
+        ],
+        "method": "full-file source review plus targeted deployment/runtime checks"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": {
+          "outcome": "ResumeContent has unbounded strings and arrays and the renderers materialize complete output buffers synchronously.",
+          "sink": "app/api/manual-export/pdf/route.ts:20",
+          "source": "attacker-controlled request or stored value"
+        },
+        "reachability": {
+          "attacker": "remote user or anonymous client",
+          "outcome": "ResumeContent has unbounded strings and arrays and the renderers materialize complete output buffers synchronously.",
+          "preconditions": "route/deployment preconditions described in summary"
+        }
+      },
+      "codeEvidence": [
+        {
+          "code": "ResumeContent has unbounded strings and arrays and the renderers materialize complete output buffers synchronously.",
+          "endLine": 22,
+          "explanation": "ResumeContent has unbounded strings and arrays and the renderers materialize complete output buffers synchronously.",
+          "id": "e1",
+          "label": "source-to-control",
+          "language": "typescript",
+          "path": "app/api/manual-export/pdf/route.ts",
+          "role": "root_cause",
+          "startLine": 20
+        }
+      ],
+      "confidence": {
+        "level": "medium",
+        "rationale": "Direct source, sink, and deployment evidence were reviewed; remaining uncertainty is limited to runtime preconditions."
+      },
+      "extensions": {
+        "candidateId": "manual-export-unbounded-resume-render"
+      },
+      "findingId": "csf_0f183f27d5fb674c780e1a08",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:b07412eed1e35b5720c1460408e2868abb1af2726c71521849b585f9d06af04e"
+      },
+      "identity": {
+        "anchor": "manual-export-unbounded-resume-render"
+      },
+      "locations": [
+        {
+          "endLine": 22,
+          "path": "app/api/manual-export/pdf/route.ts",
+          "role": "root_control",
+          "startLine": 20
+        }
+      ],
+      "occurrenceId": "occ_d118f34df22e863ffa6d5e1d",
+      "preventiveControls": [
+        "Enforce unique database constraints for identity bindings.",
+        "Treat proxy-derived headers as trusted only after origin restriction."
+      ],
+      "provenance": {
+        "source": "repository-wide-security-scan"
+      },
+      "remediation": "Apply an atomic authorization or resource-boundary check at the stated root control; add regression tests for concurrent, stale-token, direct-origin, and malformed-input cases as applicable.",
+      "remediationTests": [
+        "Add a regression test reproducing the source-to-sink path.",
+        "Add concurrency and failure-injection tests where state is claimed or quota is spent."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "e1"
+        ],
+        "summary": "ResumeContent has unbounded strings and arrays and the renderers materialize complete output buffers synchronously."
+      },
+      "ruleId": "availability.document-render",
+      "severity": {
+        "changeConditions": "Raise severity if production evidence shows broader reachability or lower it if the stated deployment precondition is absent.",
+        "level": "medium",
+        "rationale": "ResumeContent has unbounded strings and arrays and the renderers materialize complete output buffers synchronously.",
+        "score": 6.2,
+        "scoringSystem": "CVSS:3.1"
+      },
+      "summary": "ResumeContent has unbounded strings and arrays and the renderers materialize complete output buffers synchronously.",
+      "taxonomy": {
+        "category": "availability/document-render",
+        "cwe": [
+          "CWE-400"
+        ]
+      },
+      "title": "Unbounded resume structures can exhaust PDF and DOCX rendering resources",
+      "validation": {
+        "conclusion": "survives validation as reportable",
+        "evidenceRefs": [
+          "e1"
+        ],
+        "method": "full-file source review plus targeted deployment/runtime checks"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": {
+          "outcome": "The claim uniqueness constraint is only student_email, while pending tokens are allowed for multiple academic addresses on one user and each confirmation extends entitlement.",
+          "sink": "app/api/student/confirm/route.ts:20",
+          "source": "attacker-controlled request or stored value"
+        },
+        "reachability": {
+          "attacker": "remote user or anonymous client",
+          "outcome": "The claim uniqueness constraint is only student_email, while pending tokens are allowed for multiple academic addresses on one user and each confirmation extends entitlement.",
+          "preconditions": "route/deployment preconditions described in summary"
+        }
+      },
+      "codeEvidence": [
+        {
+          "code": "The claim uniqueness constraint is only student_email, while pending tokens are allowed for multiple academic addresses on one user and each confirmation extends entitlement.",
+          "endLine": 22,
+          "explanation": "The claim uniqueness constraint is only student_email, while pending tokens are allowed for multiple academic addresses on one user and each confirmation extends entitlement.",
+          "id": "e1",
+          "label": "source-to-control",
+          "language": "typescript",
+          "path": "app/api/student/confirm/route.ts",
+          "role": "root_cause",
+          "startLine": 20
+        }
+      ],
+      "confidence": {
+        "level": "medium",
+        "rationale": "Direct source, sink, and deployment evidence were reviewed; remaining uncertainty is limited to runtime preconditions."
+      },
+      "extensions": {
+        "candidateId": "student-token-stacking"
+      },
+      "findingId": "csf_fc005f69a7115e380afd6455",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:c781ae3dfbf202cff088c1ae53878477c737477572a89def01101af838f90cf3"
+      },
+      "identity": {
+        "anchor": "student-token-stacking"
+      },
+      "locations": [
+        {
+          "endLine": 22,
+          "path": "app/api/student/confirm/route.ts",
+          "role": "root_control",
+          "startLine": 20
+        }
+      ],
+      "occurrenceId": "occ_5e91705e97ca1a2e474ef5ec",
+      "preventiveControls": [
+        "Enforce unique database constraints for identity bindings.",
+        "Treat proxy-derived headers as trusted only after origin restriction."
+      ],
+      "provenance": {
+        "source": "repository-wide-security-scan"
+      },
+      "remediation": "Apply an atomic authorization or resource-boundary check at the stated root control; add regression tests for concurrent, stale-token, direct-origin, and malformed-input cases as applicable.",
+      "remediationTests": [
+        "Add a regression test reproducing the source-to-sink path.",
+        "Add concurrency and failure-injection tests where state is claimed or quota is spent."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "e1"
+        ],
+        "summary": "The claim uniqueness constraint is only student_email, while pending tokens are allowed for multiple academic addresses on one user and each confirmation extends entitlement."
+      },
+      "ruleId": "authorization.student-entitlement",
+      "severity": {
+        "changeConditions": "Raise severity if production evidence shows broader reachability or lower it if the stated deployment precondition is absent.",
+        "level": "medium",
+        "rationale": "The claim uniqueness constraint is only student_email, while pending tokens are allowed for multiple academic addresses on one user and each confirmation extends entitlement.",
+        "score": 6.2,
+        "scoringSystem": "CVSS:3.1"
+      },
+      "summary": "The claim uniqueness constraint is only student_email, while pending tokens are allowed for multiple academic addresses on one user and each confirmation extends entitlement.",
+      "taxonomy": {
+        "category": "authorization/student-entitlement",
+        "cwe": [
+          "CWE-362"
+        ]
+      },
+      "title": "Multiple pending student tokens can stack repeated premium grants",
+      "validation": {
+        "conclusion": "survives validation as reportable",
+        "evidenceRefs": [
+          "e1"
+        ],
+        "method": "full-file source review plus targeted deployment/runtime checks"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": {
+          "outcome": "A check-then-set binding has no unique database constraint, so concurrent accounts can both claim the same Telegram identity reward.",
+          "sink": "app/api/credits/telegram/route.ts:38",
+          "source": "attacker-controlled request or stored value"
+        },
+        "reachability": {
+          "attacker": "remote user or anonymous client",
+          "outcome": "A check-then-set binding has no unique database constraint, so concurrent accounts can both claim the same Telegram identity reward.",
+          "preconditions": "route/deployment preconditions described in summary"
+        }
+      },
+      "codeEvidence": [
+        {
+          "code": "A check-then-set binding has no unique database constraint, so concurrent accounts can both claim the same Telegram identity reward.",
+          "endLine": 40,
+          "explanation": "A check-then-set binding has no unique database constraint, so concurrent accounts can both claim the same Telegram identity reward.",
+          "id": "e1",
+          "label": "source-to-control",
+          "language": "typescript",
+          "path": "app/api/credits/telegram/route.ts",
+          "role": "root_cause",
+          "startLine": 38
+        }
+      ],
+      "confidence": {
+        "level": "medium",
+        "rationale": "Direct source, sink, and deployment evidence were reviewed; remaining uncertainty is limited to runtime preconditions."
+      },
+      "extensions": {
+        "candidateId": "telegram-reward-race"
+      },
+      "findingId": "csf_35542cbf418e2601638480c8",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:8258ec762e23e5823cd3e144987127b7911aaeff3232f880c2f7e6f8943be0fd"
+      },
+      "identity": {
+        "anchor": "telegram-reward-race"
+      },
+      "locations": [
+        {
+          "endLine": 40,
+          "path": "app/api/credits/telegram/route.ts",
+          "role": "root_control",
+          "startLine": 38
+        }
+      ],
+      "occurrenceId": "occ_0234a362fa0dbf480fedce1c",
+      "preventiveControls": [
+        "Enforce unique database constraints for identity bindings.",
+        "Treat proxy-derived headers as trusted only after origin restriction."
+      ],
+      "provenance": {
+        "source": "repository-wide-security-scan"
+      },
+      "remediation": "Apply an atomic authorization or resource-boundary check at the stated root control; add regression tests for concurrent, stale-token, direct-origin, and malformed-input cases as applicable.",
+      "remediationTests": [
+        "Add a regression test reproducing the source-to-sink path.",
+        "Add concurrency and failure-injection tests where state is claimed or quota is spent."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "e1"
+        ],
+        "summary": "A check-then-set binding has no unique database constraint, so concurrent accounts can both claim the same Telegram identity reward."
+      },
+      "ruleId": "authorization.telegram-reward",
+      "severity": {
+        "changeConditions": "Raise severity if production evidence shows broader reachability or lower it if the stated deployment precondition is absent.",
+        "level": "medium",
+        "rationale": "A check-then-set binding has no unique database constraint, so concurrent accounts can both claim the same Telegram identity reward.",
+        "score": 6.2,
+        "scoringSystem": "CVSS:3.1"
+      },
+      "summary": "A check-then-set binding has no unique database constraint, so concurrent accounts can both claim the same Telegram identity reward.",
+      "taxonomy": {
+        "category": "authorization/telegram-reward",
+        "cwe": [
+          "CWE-367"
+        ]
+      },
+      "title": "One Telegram membership can reward multiple RoleSharp accounts through a race",
+      "validation": {
+        "conclusion": "survives validation as reportable",
+        "evidenceRefs": [
+          "e1"
+        ],
+        "method": "full-file source review plus targeted deployment/runtime checks"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": {
+          "outcome": "Quota is counted before enqueue without an atomic reservation; parallel requests can all pass and enqueue costly work.",
+          "sink": "app/api/generate/route.ts:99",
+          "source": "attacker-controlled request or stored value"
+        },
+        "reachability": {
+          "attacker": "remote user or anonymous client",
+          "outcome": "Quota is counted before enqueue without an atomic reservation; parallel requests can all pass and enqueue costly work.",
+          "preconditions": "route/deployment preconditions described in summary"
+        }
+      },
+      "codeEvidence": [
+        {
+          "code": "Quota is counted before enqueue without an atomic reservation; parallel requests can all pass and enqueue costly work.",
+          "endLine": 101,
+          "explanation": "Quota is counted before enqueue without an atomic reservation; parallel requests can all pass and enqueue costly work.",
+          "id": "e1",
+          "label": "source-to-control",
+          "language": "typescript",
+          "path": "app/api/generate/route.ts",
+          "role": "root_cause",
+          "startLine": 99
+        }
+      ],
+      "confidence": {
+        "level": "medium",
+        "rationale": "Direct source, sink, and deployment evidence were reviewed; remaining uncertainty is limited to runtime preconditions."
+      },
+      "extensions": {
+        "candidateId": "generate-quota-race"
+      },
+      "findingId": "csf_46927b7da2042beaea01d742",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:6b120410bde6709e4c5ddb1c3df8329183d86c26916948d93fd791053efe210d"
+      },
+      "identity": {
+        "anchor": "generate-quota-race"
+      },
+      "locations": [
+        {
+          "endLine": 101,
+          "path": "app/api/generate/route.ts",
+          "role": "root_control",
+          "startLine": 99
+        }
+      ],
+      "occurrenceId": "occ_58813c303b81a92315e18c68",
+      "preventiveControls": [
+        "Enforce unique database constraints for identity bindings.",
+        "Treat proxy-derived headers as trusted only after origin restriction."
+      ],
+      "provenance": {
+        "source": "repository-wide-security-scan"
+      },
+      "remediation": "Apply an atomic authorization or resource-boundary check at the stated root control; add regression tests for concurrent, stale-token, direct-origin, and malformed-input cases as applicable.",
+      "remediationTests": [
+        "Add a regression test reproducing the source-to-sink path.",
+        "Add concurrency and failure-injection tests where state is claimed or quota is spent."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "e1"
+        ],
+        "summary": "Quota is counted before enqueue without an atomic reservation; parallel requests can all pass and enqueue costly work."
+      },
+      "ruleId": "availability.generation-quota",
+      "severity": {
+        "changeConditions": "Raise severity if production evidence shows broader reachability or lower it if the stated deployment precondition is absent.",
+        "level": "medium",
+        "rationale": "Quota is counted before enqueue without an atomic reservation; parallel requests can all pass and enqueue costly work.",
+        "score": 6.2,
+        "scoringSystem": "CVSS:3.1"
+      },
+      "summary": "Quota is counted before enqueue without an atomic reservation; parallel requests can all pass and enqueue costly work.",
+      "taxonomy": {
+        "category": "availability/generation-quota",
+        "cwe": [
+          "CWE-362"
+        ]
+      },
+      "title": "Concurrent generation requests bypass the monthly allowance",
+      "validation": {
+        "conclusion": "survives validation as reportable",
+        "evidenceRefs": [
+          "e1"
+        ],
+        "method": "full-file source review plus targeted deployment/runtime checks"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": {
+          "outcome": "The endpoint selects Claude when credits are positive but never spends or decrements a credit.",
+          "sink": "app/api/improve/route.ts:24",
+          "source": "attacker-controlled request or stored value"
+        },
+        "reachability": {
+          "attacker": "remote user or anonymous client",
+          "outcome": "The endpoint selects Claude when credits are positive but never spends or decrements a credit.",
+          "preconditions": "route/deployment preconditions described in summary"
+        }
+      },
+      "codeEvidence": [
+        {
+          "code": "The endpoint selects Claude when credits are positive but never spends or decrements a credit.",
+          "endLine": 26,
+          "explanation": "The endpoint selects Claude when credits are positive but never spends or decrements a credit.",
+          "id": "e1",
+          "label": "source-to-control",
+          "language": "typescript",
+          "path": "app/api/improve/route.ts",
+          "role": "root_cause",
+          "startLine": 24
+        }
+      ],
+      "confidence": {
+        "level": "medium",
+        "rationale": "Direct source, sink, and deployment evidence were reviewed; remaining uncertainty is limited to runtime preconditions."
+      },
+      "extensions": {
+        "candidateId": "improve-credit-not-spent"
+      },
+      "findingId": "csf_090d3ef6a1f8b9d566bed6e8",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:f543f1525b9b2db45f837717242dfc20e01f8e2758c2bd9e8232fb83821325cd"
+      },
+      "identity": {
+        "anchor": "improve-credit-not-spent"
+      },
+      "locations": [
+        {
+          "endLine": 26,
+          "path": "app/api/improve/route.ts",
+          "role": "root_control",
+          "startLine": 24
+        }
+      ],
+      "occurrenceId": "occ_b97cef61deec4b72233fdda4",
+      "preventiveControls": [
+        "Enforce unique database constraints for identity bindings.",
+        "Treat proxy-derived headers as trusted only after origin restriction."
+      ],
+      "provenance": {
+        "source": "repository-wide-security-scan"
+      },
+      "remediation": "Apply an atomic authorization or resource-boundary check at the stated root control; add regression tests for concurrent, stale-token, direct-origin, and malformed-input cases as applicable.",
+      "remediationTests": [
+        "Add a regression test reproducing the source-to-sink path.",
+        "Add concurrency and failure-injection tests where state is claimed or quota is spent."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "e1"
+        ],
+        "summary": "The endpoint selects Claude when credits are positive but never spends or decrements a credit."
+      },
+      "ruleId": "authorization.credit-spend",
+      "severity": {
+        "changeConditions": "Raise severity if production evidence shows broader reachability or lower it if the stated deployment precondition is absent.",
+        "level": "medium",
+        "rationale": "The endpoint selects Claude when credits are positive but never spends or decrements a credit.",
+        "score": 6.2,
+        "scoringSystem": "CVSS:3.1"
+      },
+      "summary": "The endpoint selects Claude when credits are positive but never spends or decrements a credit.",
+      "taxonomy": {
+        "category": "authorization/credit-spend",
+        "cwe": [
+          "CWE-770"
+        ]
+      },
+      "title": "Holding one credit unlocks unlimited higher-cost Claude rewrites",
+      "validation": {
+        "conclusion": "survives validation as reportable",
+        "evidenceRefs": [
+          "e1"
+        ],
+        "method": "full-file source review plus targeted deployment/runtime checks"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": {
+          "outcome": "Self-contained JWE sessions are validated only by token timestamps and identity; password state is never consulted.",
+          "sink": "lib/auth.ts:130",
+          "source": "attacker-controlled request or stored value"
+        },
+        "reachability": {
+          "attacker": "remote user or anonymous client",
+          "outcome": "Self-contained JWE sessions are validated only by token timestamps and identity; password state is never consulted.",
+          "preconditions": "route/deployment preconditions described in summary"
+        }
+      },
+      "codeEvidence": [
+        {
+          "code": "Self-contained JWE sessions are validated only by token timestamps and identity; password state is never consulted.",
+          "endLine": 132,
+          "explanation": "Self-contained JWE sessions are validated only by token timestamps and identity; password state is never consulted.",
+          "id": "e1",
+          "label": "source-to-control",
+          "language": "typescript",
+          "path": "lib/auth.ts",
+          "role": "root_cause",
+          "startLine": 130
+        }
+      ],
+      "confidence": {
+        "level": "medium",
+        "rationale": "Direct source, sink, and deployment evidence were reviewed; remaining uncertainty is limited to runtime preconditions."
+      },
+      "extensions": {
+        "candidateId": "password-session-not-revoked"
+      },
+      "findingId": "csf_aab88077fcd9b9e59bb87f84",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:436c3ce16805f648fdaf10e09f262bbb73abfc6714102797ddd5b33ef6c88730"
+      },
+      "identity": {
+        "anchor": "password-session-not-revoked"
+      },
+      "locations": [
+        {
+          "endLine": 132,
+          "path": "lib/auth.ts",
+          "role": "root_control",
+          "startLine": 130
+        },
+        {
+          "endLine": 21,
+          "path": "app/api/auth/reset-password/route.ts",
+          "role": "entrypoint",
+          "startLine": 15
+        }
+      ],
+      "occurrenceId": "occ_3b8cbfe56761edab285c7d4d",
+      "preventiveControls": [
+        "Enforce unique database constraints for identity bindings.",
+        "Treat proxy-derived headers as trusted only after origin restriction."
+      ],
+      "provenance": {
+        "source": "repository-wide-security-scan"
+      },
+      "remediation": "Apply an atomic authorization or resource-boundary check at the stated root control; add regression tests for concurrent, stale-token, direct-origin, and malformed-input cases as applicable.",
+      "remediationTests": [
+        "Add a regression test reproducing the source-to-sink path.",
+        "Add concurrency and failure-injection tests where state is claimed or quota is spent."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "e1"
+        ],
+        "summary": "Self-contained JWE sessions are validated only by token timestamps and identity; password state is never consulted."
+      },
+      "ruleId": "authentication.session-revocation",
+      "severity": {
+        "changeConditions": "Raise severity if production evidence shows broader reachability or lower it if the stated deployment precondition is absent.",
+        "level": "medium",
+        "rationale": "Self-contained JWE sessions are validated only by token timestamps and identity; password state is never consulted.",
+        "score": 6.2,
+        "scoringSystem": "CVSS:3.1"
+      },
+      "summary": "Self-contained JWE sessions are validated only by token timestamps and identity; password state is never consulted.",
+      "taxonomy": {
+        "category": "authentication/session-revocation",
+        "cwe": [
+          "CWE-613"
+        ]
+      },
+      "title": "Password changes and resets do not revoke previously issued sessions",
+      "validation": {
+        "conclusion": "survives validation as reportable",
+        "evidenceRefs": [
+          "e1"
+        ],
+        "method": "full-file source review plus targeted deployment/runtime checks"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": {
+          "outcome": "The premium_granted_at marker commits in a separate operation before grantPremium; a crash in between suppresses all retries.",
+          "sink": "app/api/pay/crypto/webhook/route.ts:39",
+          "source": "attacker-controlled request or stored value"
+        },
+        "reachability": {
+          "attacker": "remote user or anonymous client",
+          "outcome": "The premium_granted_at marker commits in a separate operation before grantPremium; a crash in between suppresses all retries.",
+          "preconditions": "route/deployment preconditions described in summary"
+        }
+      },
+      "codeEvidence": [
+        {
+          "code": "The premium_granted_at marker commits in a separate operation before grantPremium; a crash in between suppresses all retries.",
+          "endLine": 41,
+          "explanation": "The premium_granted_at marker commits in a separate operation before grantPremium; a crash in between suppresses all retries.",
+          "id": "e1",
+          "label": "source-to-control",
+          "language": "typescript",
+          "path": "app/api/pay/crypto/webhook/route.ts",
+          "role": "root_cause",
+          "startLine": 39
+        }
+      ],
+      "confidence": {
+        "level": "medium",
+        "rationale": "Direct source, sink, and deployment evidence were reviewed; remaining uncertainty is limited to runtime preconditions."
+      },
+      "extensions": {
+        "candidateId": "payment-claim-before-entitlement"
+      },
+      "findingId": "csf_d9f3465f61471f5cbf7b4b3b",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:600aaa2933cbef0089ef52925edc2039e07f4e1fee86baae9f9daa20b3f28d48"
+      },
+      "identity": {
+        "anchor": "payment-claim-before-entitlement"
+      },
+      "locations": [
+        {
+          "endLine": 41,
+          "path": "app/api/pay/crypto/webhook/route.ts",
+          "role": "root_control",
+          "startLine": 39
+        }
+      ],
+      "occurrenceId": "occ_1d23411e9fb98aa1d13b5138",
+      "preventiveControls": [
+        "Enforce unique database constraints for identity bindings.",
+        "Treat proxy-derived headers as trusted only after origin restriction."
+      ],
+      "provenance": {
+        "source": "repository-wide-security-scan"
+      },
+      "remediation": "Apply an atomic authorization or resource-boundary check at the stated root control; add regression tests for concurrent, stale-token, direct-origin, and malformed-input cases as applicable.",
+      "remediationTests": [
+        "Add a regression test reproducing the source-to-sink path.",
+        "Add concurrency and failure-injection tests where state is claimed or quota is spent."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "e1"
+        ],
+        "summary": "The premium_granted_at marker commits in a separate operation before grantPremium; a crash in between suppresses all retries."
+      },
+      "ruleId": "authorization.payment-entitlement",
+      "severity": {
+        "changeConditions": "Raise severity if production evidence shows broader reachability or lower it if the stated deployment precondition is absent.",
+        "level": "medium",
+        "rationale": "The premium_granted_at marker commits in a separate operation before grantPremium; a crash in between suppresses all retries.",
+        "score": 6.2,
+        "scoringSystem": "CVSS:3.1"
+      },
+      "summary": "The premium_granted_at marker commits in a separate operation before grantPremium; a crash in between suppresses all retries.",
+      "taxonomy": {
+        "category": "authorization/payment-entitlement",
+        "cwe": [
+          "CWE-664"
+        ]
+      },
+      "title": "Payment claims can be marked before premium entitlement is committed",
+      "validation": {
+        "conclusion": "survives validation as reportable",
+        "evidenceRefs": [
+          "e1"
+        ],
+        "method": "full-file source review plus targeted deployment/runtime checks"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": {
+          "outcome": "Stored user-controlled fields are quoted for delimiters but values beginning with formula characters remain executable when opened in spreadsheet software.",
+          "sink": "app/admin/admin-panel.tsx:123",
+          "source": "attacker-controlled request or stored value"
+        },
+        "reachability": {
+          "attacker": "remote user or anonymous client",
+          "outcome": "Stored user-controlled fields are quoted for delimiters but values beginning with formula characters remain executable when opened in spreadsheet software.",
+          "preconditions": "route/deployment preconditions described in summary"
+        }
+      },
+      "codeEvidence": [
+        {
+          "code": "Stored user-controlled fields are quoted for delimiters but values beginning with formula characters remain executable when opened in spreadsheet software.",
+          "endLine": 125,
+          "explanation": "Stored user-controlled fields are quoted for delimiters but values beginning with formula characters remain executable when opened in spreadsheet software.",
+          "id": "e1",
+          "label": "source-to-control",
+          "language": "typescript",
+          "path": "app/admin/admin-panel.tsx",
+          "role": "root_cause",
+          "startLine": 123
+        }
+      ],
+      "confidence": {
+        "level": "medium",
+        "rationale": "Direct source, sink, and deployment evidence were reviewed; remaining uncertainty is limited to runtime preconditions."
+      },
+      "extensions": {
+        "candidateId": "admin-csv-formula-injection"
+      },
+      "findingId": "csf_190060c76a2e0d88f4491729",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:b0e13b95c09e90908dc3536d1d29098de4c2a946e59df3deb4afa56092050997"
+      },
+      "identity": {
+        "anchor": "admin-csv-formula-injection"
+      },
+      "locations": [
+        {
+          "endLine": 125,
+          "path": "app/admin/admin-panel.tsx",
+          "role": "root_control",
+          "startLine": 123
+        }
+      ],
+      "occurrenceId": "occ_1619a8c67f085dac725dfd71",
+      "preventiveControls": [
+        "Enforce unique database constraints for identity bindings.",
+        "Treat proxy-derived headers as trusted only after origin restriction."
+      ],
+      "provenance": {
+        "source": "repository-wide-security-scan"
+      },
+      "remediation": "Apply an atomic authorization or resource-boundary check at the stated root control; add regression tests for concurrent, stale-token, direct-origin, and malformed-input cases as applicable.",
+      "remediationTests": [
+        "Add a regression test reproducing the source-to-sink path.",
+        "Add concurrency and failure-injection tests where state is claimed or quota is spent."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "e1"
+        ],
+        "summary": "Stored user-controlled fields are quoted for delimiters but values beginning with formula characters remain executable when opened in spreadsheet software."
+      },
+      "ruleId": "injection.csv-formula",
+      "severity": {
+        "changeConditions": "Raise severity if production evidence shows broader reachability or lower it if the stated deployment precondition is absent.",
+        "level": "medium",
+        "rationale": "Stored user-controlled fields are quoted for delimiters but values beginning with formula characters remain executable when opened in spreadsheet software.",
+        "score": 6.2,
+        "scoringSystem": "CVSS:3.1"
+      },
+      "summary": "Stored user-controlled fields are quoted for delimiters but values beginning with formula characters remain executable when opened in spreadsheet software.",
+      "taxonomy": {
+        "category": "injection/csv-formula",
+        "cwe": [
+          "CWE-1236"
+        ]
+      },
+      "title": "Admin CSV exports do not neutralize spreadsheet formulas",
+      "validation": {
+        "conclusion": "survives validation as reportable",
+        "evidenceRefs": [
+          "e1"
+        ],
+        "method": "full-file source review plus targeted deployment/runtime checks"
+      }
+    },
+    {
+      "attackPath": {
+        "dataflow": {
+          "outcome": "The g_state cookie is scoped to the registrable parent domain, allowing a compromised sibling host to overwrite it before callback completion.",
+          "sink": "lib/cookies.ts:7",
+          "source": "attacker-controlled request or stored value"
+        },
+        "reachability": {
+          "attacker": "remote user or anonymous client",
+          "outcome": "The g_state cookie is scoped to the registrable parent domain, allowing a compromised sibling host to overwrite it before callback completion.",
+          "preconditions": "route/deployment preconditions described in summary"
+        }
+      },
+      "codeEvidence": [
+        {
+          "code": "The g_state cookie is scoped to the registrable parent domain, allowing a compromised sibling host to overwrite it before callback completion.",
+          "endLine": 9,
+          "explanation": "The g_state cookie is scoped to the registrable parent domain, allowing a compromised sibling host to overwrite it before callback completion.",
+          "id": "e1",
+          "label": "source-to-control",
+          "language": "typescript",
+          "path": "lib/cookies.ts",
+          "role": "root_cause",
+          "startLine": 7
+        }
+      ],
+      "confidence": {
+        "level": "medium",
+        "rationale": "Direct source, sink, and deployment evidence were reviewed; remaining uncertainty is limited to runtime preconditions."
+      },
+      "extensions": {
+        "candidateId": "oauth-state-parent-cookie"
+      },
+      "findingId": "csf_2401949b1f82424af2f79183",
+      "fingerprints": {
+        "algorithm": "codex-security/v1",
+        "primary": "codex-security/v1:sha256:47a512f786ddc30ea73c0568bc7a6238418117aa78485b44eb30bb20d71690ff"
+      },
+      "identity": {
+        "anchor": "oauth-state-parent-cookie"
+      },
+      "locations": [
+        {
+          "endLine": 9,
+          "path": "lib/cookies.ts",
+          "role": "root_control",
+          "startLine": 7
+        }
+      ],
+      "occurrenceId": "occ_3066bfb7f596f13e29b9573d",
+      "preventiveControls": [
+        "Enforce unique database constraints for identity bindings.",
+        "Treat proxy-derived headers as trusted only after origin restriction."
+      ],
+      "provenance": {
+        "source": "repository-wide-security-scan"
+      },
+      "remediation": "Apply an atomic authorization or resource-boundary check at the stated root control; add regression tests for concurrent, stale-token, direct-origin, and malformed-input cases as applicable.",
+      "remediationTests": [
+        "Add a regression test reproducing the source-to-sink path.",
+        "Add concurrency and failure-injection tests where state is claimed or quota is spent."
+      ],
+      "rootCause": {
+        "evidenceRefs": [
+          "e1"
+        ],
+        "summary": "The g_state cookie is scoped to the registrable parent domain, allowing a compromised sibling host to overwrite it before callback completion."
+      },
+      "ruleId": "csrf.oauth-state-cookie",
+      "severity": {
+        "changeConditions": "Raise severity if production evidence shows broader reachability or lower it if the stated deployment precondition is absent.",
+        "level": "medium",
+        "rationale": "The g_state cookie is scoped to the registrable parent domain, allowing a compromised sibling host to overwrite it before callback completion.",
+        "score": 6.2,
+        "scoringSystem": "CVSS:3.1"
+      },
+      "summary": "The g_state cookie is scoped to the registrable parent domain, allowing a compromised sibling host to overwrite it before callback completion.",
+      "taxonomy": {
+        "category": "csrf/oauth-state-cookie",
+        "cwe": [
+          "CWE-352"
+        ]
+      },
+      "title": "Parent-domain OAuth state cookies allow sibling-host login CSRF",
+      "validation": {
+        "conclusion": "survives validation as reportable",
+        "evidenceRefs": [
+          "e1"
+        ],
+        "method": "full-file source review plus targeted deployment/runtime checks"
+      }
+    }
+  ],
+  "scanId": "723bc11f7b758e6433c9a0ddb05efd167dc8ae25_20260711T084800Z",
+  "schemaVersion": "1.0"
+}

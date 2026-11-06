@@ -1,0 +1,24 @@
+{
+  "_comment": "SIZE_OK: pure closed-world v1 skill taxonomy data.",
+  "version": "job-match-normalization-v1",
+  "skills": [
+    { "id": "figma", "canonical": "Figma", "aliases": ["figma", "interface design tool"] },
+    { "id": "user_research", "canonical": "User research", "aliases": ["user research", "ux research", "research"] },
+    { "id": "prototyping", "canonical": "Prototyping", "aliases": ["prototyping", "rapid prototyping", "interactive prototypes"] },
+    { "id": "saas", "canonical": "SaaS", "aliases": ["saas", "software as a service"] },
+    { "id": "b2b", "canonical": "B2B", "aliases": ["b2b", "business to business"] },
+    { "id": "analytics", "canonical": "Analytics", "aliases": ["analytics", "data analytics", "product analytics"] },
+    { "id": "facilitation", "canonical": "Facilitation", "aliases": ["facilitation", "workshop facilitation"] },
+    { "id": "active_rn_license", "canonical": "Active RN license", "aliases": ["active rn license", "active registered nurse license", "rn license"] },
+    { "id": "typescript", "canonical": "TypeScript", "aliases": ["typescript", "ts"] },
+    { "id": "javascript", "canonical": "JavaScript", "aliases": ["javascript", "js"] },
+    { "id": "react", "canonical": "React", "aliases": ["react", "reactjs", "react.js"] },
+    { "id": "nodejs", "canonical": "Node.js", "aliases": ["node.js", "nodejs"] },
+    { "id": "sql", "canonical": "SQL", "aliases": ["sql", "structured query language"] },
+    { "id": "python", "canonical": "Python", "aliases": ["python"] },
+    { "id": "product_strategy", "canonical": "Product strategy", "aliases": ["product strategy"] },
+    { "id": "design_systems", "canonical": "Design systems", "aliases": ["design systems", "design system"] },
+    { "id": "accessibility", "canonical": "Accessibility", "aliases": ["accessibility", "wcag"] },
+    { "id": "agile", "canonical": "Agile", "aliases": ["agile", "scrum"] }
+  ]
+}

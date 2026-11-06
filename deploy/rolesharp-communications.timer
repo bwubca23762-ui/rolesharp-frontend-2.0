@@ -1,0 +1,18 @@
+[Unit]
+Description=Drain the RoleSharp communications outbox every five minutes
+
+[Timer]
+# Five minutes after boot, then every five. Campaign email is not latency
+# sensitive — the caps, quiet hours, and approval gates that govern it operate
+# on much longer horizons — and a longer period keeps the per-batch provider
+# burst small.
+OnBootSec=5min
+OnUnitActiveSec=5min
+AccuracySec=30s
+# Without this every box in a fleet fires on the same wall-clock boundary.
+RandomizedDelaySec=30s
+Persistent=true
+Unit=rolesharp-communications.service
+
+[Install]
+WantedBy=timers.target

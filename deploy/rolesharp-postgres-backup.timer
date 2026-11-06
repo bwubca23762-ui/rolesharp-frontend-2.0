@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily RoleSharp PostgreSQL backup
+
+[Timer]
+OnCalendar=*-*-* 03:00:00
+Persistent=true
+RandomizedDelaySec=10m
+Unit=rolesharp-postgres-backup.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,147 @@
+{
+  "_comment": "SIZE_OK: pure synthetic golden-fixture data for the versioned scoring contract.",
+  "fixtures": {
+    "A": {
+      "scoreVersion": "job-match-v1",
+      "normalizationVersion": "job-match-normalization-v1",
+      "profile": {
+        "desiredTitles": [{ "text": "Product Designer", "evidence": "explicit" }],
+        "skills": [
+          { "text": "Figma", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:figma" },
+          { "text": "user research", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:research" },
+          { "text": "rapid prototyping", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:prototype" },
+          { "text": "software as a service", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:saas" },
+          { "text": "business to business", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:b2b" },
+          { "text": "data analytics", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:analytics" },
+          { "text": "facilitation", "state": "not_possessed", "evidence": "authoritative_current", "sourceId": "profile:facilitation" }
+        ],
+        "relevantExperience": { "months": 84, "evidence": "verified_dated" },
+        "seniority": { "level": "senior", "track": "individual", "evidence": "explicit" },
+        "acceptedTracks": ["individual"],
+        "locationPreferences": [{ "location": "US", "priority": "desired" }],
+        "remotePolicies": ["remote"],
+        "preferenceEvidence": "confirmed",
+        "authorization": { "state": "authorized", "evidence": "confirmed" },
+        "workTypes": [{ "type": "full_time", "priority": "desired" }],
+        "compensationFloor": { "amountMinor": 12000000, "currency": "USD", "period": "annual" }
+      },
+      "job": {
+        "canonicalJobKey": "fixture-a",
+        "title": { "text": "Product Designer", "evidence": "structured" },
+        "skillRequirements": [
+          { "text": "Figma", "kind": "required", "mandatory": true, "evidence": "labeled_list", "sourceId": "job:a:figma" },
+          { "text": "research", "kind": "required", "mandatory": true, "evidence": "labeled_list", "sourceId": "job:a:research" },
+          { "text": "prototyping", "kind": "required", "mandatory": true, "evidence": "labeled_list", "sourceId": "job:a:prototype" },
+          { "text": "SaaS", "kind": "preferred", "mandatory": false, "evidence": "labeled_list", "sourceId": "job:a:saas" },
+          { "text": "B2B", "kind": "preferred", "mandatory": false, "evidence": "labeled_list", "sourceId": "job:a:b2b" },
+          { "text": "analytics", "kind": "preferred", "mandatory": false, "evidence": "labeled_list", "sourceId": "job:a:analytics" },
+          { "text": "facilitation", "kind": "preferred", "mandatory": false, "evidence": "labeled_list", "sourceId": "job:a:facilitation" }
+        ],
+        "experience": { "minimumMonths": 60, "nonNegotiable": false, "evidence": "explicit" },
+        "seniority": { "level": "senior", "track": "individual", "evidence": "explicit", "forbiddenLevels": [] },
+        "location": { "locations": ["US"], "remotePolicy": "remote", "evidence": "explicit" },
+        "authorization": { "sponsorship": "not_required", "evidence": "explicit" },
+        "workType": { "type": "full_time", "evidence": "explicit" },
+        "compensation": { "lowerMinor": 12500000, "upperMinor": 15000000, "currency": "USD", "period": "annual", "evidence": "explicit" },
+        "freshness": { "publishedAt": "2026-07-25T00:00:00.000Z", "capturedAt": "2026-07-30T00:00:00.000Z", "evidence": "provider" },
+        "gates": { "listingStatus": "active", "duplicate": false, "sourceBlocked": false, "companyBlocked": false, "previouslyApplied": false, "employerIdentity": "verified" },
+        "automation": { "emailInstruction": "explicit", "recipient": "source_backed", "consent": "current", "package": "valid", "answers": "safe" }
+      },
+      "fxSnapshot": { "version": "fx-v1", "rates": [{ "currency": "USD", "numerator": 1, "denominator": 1 }] }
+    },
+    "B": {
+      "scoreVersion": "job-match-v1",
+      "normalizationVersion": "job-match-normalization-v1",
+      "profile": {
+        "desiredTitles": [{ "text": "Product Designer", "evidence": "explicit" }],
+        "skills": [
+          { "text": "Figma", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:figma" },
+          { "text": "research", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:research" },
+          { "text": "prototyping", "state": "not_possessed", "evidence": "explicit_current", "sourceId": "profile:prototype" },
+          { "text": "SaaS", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:saas" },
+          { "text": "analytics", "state": "not_possessed", "evidence": "explicit_current", "sourceId": "profile:analytics" }
+        ],
+        "relevantExperience": { "months": 48, "evidence": "verified_dated" },
+        "seniority": { "level": "senior", "track": "individual", "evidence": "explicit" },
+        "acceptedTracks": ["individual"],
+        "locationPreferences": [
+          { "location": "US", "priority": "desired" },
+          { "location": "CA", "priority": "acceptable" }
+        ],
+        "remotePolicies": ["remote", "hybrid"],
+        "preferenceEvidence": "confirmed",
+        "authorization": { "state": "needs_sponsorship", "evidence": "confirmed" },
+        "workTypes": [{ "type": "full_time", "priority": "desired" }],
+        "compensationFloor": { "amountMinor": 12000000, "currency": "USD", "period": "annual" }
+      },
+      "job": {
+        "canonicalJobKey": "fixture-b",
+        "title": { "text": "UX Designer", "evidence": "structured" },
+        "skillRequirements": [
+          { "text": "Figma", "kind": "required", "mandatory": false, "evidence": "explicit_prose", "sourceId": "job:b:figma" },
+          { "text": "user research", "kind": "required", "mandatory": false, "evidence": "explicit_prose", "sourceId": "job:b:research" },
+          { "text": "prototyping", "kind": "required", "mandatory": false, "evidence": "explicit_prose", "sourceId": "job:b:prototype" },
+          { "text": "SaaS", "kind": "preferred", "mandatory": false, "evidence": "explicit_prose", "sourceId": "job:b:saas" },
+          { "text": "analytics", "kind": "preferred", "mandatory": false, "evidence": "explicit_prose", "sourceId": "job:b:analytics" }
+        ],
+        "experience": { "minimumMonths": 60, "nonNegotiable": false, "evidence": "explicit" },
+        "seniority": { "level": "staff_or_lead", "track": "individual", "evidence": "explicit", "forbiddenLevels": [] },
+        "location": { "locations": ["CA"], "remotePolicy": "hybrid", "evidence": "explicit" },
+        "authorization": { "sponsorship": "silent", "evidence": "silent" },
+        "workType": { "type": "full_time", "evidence": "explicit" },
+        "freshness": { "publishedAt": "2026-07-28T00:00:00.000Z", "capturedAt": "2026-07-30T00:00:00.000Z", "evidence": "provider" },
+        "gates": { "listingStatus": "active", "duplicate": false, "sourceBlocked": false, "companyBlocked": false, "previouslyApplied": false, "employerIdentity": "verified" },
+        "automation": { "emailInstruction": "missing", "recipient": "missing", "consent": "current", "package": "valid", "answers": "safe" }
+      },
+      "fxSnapshot": { "version": "fx-v1", "rates": [{ "currency": "USD", "numerator": 1, "denominator": 1 }] }
+    },
+    "C": {
+      "scoreVersion": "job-match-v1",
+      "normalizationVersion": "job-match-normalization-v1",
+      "profile": {
+        "desiredTitles": [{ "text": "Product Designer", "evidence": "explicit" }],
+        "skills": [
+          { "text": "Figma", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:figma" },
+          { "text": "research", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:research" },
+          { "text": "active registered nurse license", "state": "not_possessed", "evidence": "authoritative_current", "sourceId": "profile:rn" },
+          { "text": "SaaS", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:saas" },
+          { "text": "B2B", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:b2b" },
+          { "text": "analytics", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:analytics" },
+          { "text": "facilitation", "state": "possessed", "evidence": "authoritative_current", "sourceId": "profile:facilitation" }
+        ],
+        "relevantExperience": { "months": 84, "evidence": "verified_dated" },
+        "seniority": { "level": "senior", "track": "individual", "evidence": "explicit" },
+        "acceptedTracks": ["individual"],
+        "locationPreferences": [{ "location": "US", "priority": "desired" }],
+        "remotePolicies": ["remote"],
+        "preferenceEvidence": "confirmed",
+        "authorization": { "state": "authorized", "evidence": "confirmed" },
+        "workTypes": [{ "type": "full_time", "priority": "desired" }],
+        "compensationFloor": { "amountMinor": 12000000, "currency": "USD", "period": "annual" }
+      },
+      "job": {
+        "canonicalJobKey": "fixture-c",
+        "title": { "text": "Product Designer", "evidence": "structured" },
+        "skillRequirements": [
+          { "text": "Figma", "kind": "required", "mandatory": true, "evidence": "labeled_list", "sourceId": "job:c:figma" },
+          { "text": "research", "kind": "required", "mandatory": true, "evidence": "labeled_list", "sourceId": "job:c:research" },
+          { "text": "active RN license", "kind": "required", "mandatory": true, "evidence": "labeled_list", "sourceId": "job:c:rn" },
+          { "text": "SaaS", "kind": "preferred", "mandatory": false, "evidence": "labeled_list", "sourceId": "job:c:saas" },
+          { "text": "B2B", "kind": "preferred", "mandatory": false, "evidence": "labeled_list", "sourceId": "job:c:b2b" },
+          { "text": "analytics", "kind": "preferred", "mandatory": false, "evidence": "labeled_list", "sourceId": "job:c:analytics" },
+          { "text": "facilitation", "kind": "preferred", "mandatory": false, "evidence": "labeled_list", "sourceId": "job:c:facilitation" }
+        ],
+        "experience": { "minimumMonths": 60, "nonNegotiable": false, "evidence": "explicit" },
+        "seniority": { "level": "senior", "track": "individual", "evidence": "explicit", "forbiddenLevels": [] },
+        "location": { "locations": ["US"], "remotePolicy": "remote", "evidence": "explicit" },
+        "authorization": { "sponsorship": "not_required", "evidence": "explicit" },
+        "workType": { "type": "full_time", "evidence": "explicit" },
+        "compensation": { "lowerMinor": 12500000, "upperMinor": 15000000, "currency": "USD", "period": "annual", "evidence": "explicit" },
+        "freshness": { "publishedAt": "2026-07-29T00:00:00.000Z", "capturedAt": "2026-07-30T00:00:00.000Z", "evidence": "provider" },
+        "gates": { "listingStatus": "active", "duplicate": false, "sourceBlocked": false, "companyBlocked": false, "previouslyApplied": false, "employerIdentity": "verified" },
+        "automation": { "emailInstruction": "explicit", "recipient": "source_backed", "consent": "current", "package": "valid", "answers": "safe" }
+      },
+      "fxSnapshot": { "version": "fx-v1", "rates": [{ "currency": "USD", "numerator": 1, "denominator": 1 }] }
+    }
+  }
+}

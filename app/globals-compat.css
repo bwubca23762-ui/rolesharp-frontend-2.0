@@ -1,0 +1,7 @@
+/* Compatibility aggregator. Import order preserves the original cascade exactly. */
+@import "./compat/shared.css";
+@import "./compat/admin.css";
+@import "./compat/marketing.css";
+@import "./compat/auth.css";
+@import "./compat/tool.css";
+@import "./compat/legacy-bridge.css";

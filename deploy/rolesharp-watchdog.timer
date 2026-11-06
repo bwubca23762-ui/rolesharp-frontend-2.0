@@ -1,0 +1,13 @@
+[Unit]
+Description=Probe RoleSharp web health every two minutes
+
+[Timer]
+# First probe two minutes after boot so a deploy or reboot is not mistaken for
+# a hang while the service is still coming up.
+OnBootSec=2min
+OnUnitActiveSec=2min
+AccuracySec=15s
+Unit=rolesharp-watchdog.service
+
+[Install]
+WantedBy=timers.target

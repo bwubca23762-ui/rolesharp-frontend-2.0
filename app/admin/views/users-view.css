@@ -1,0 +1,95 @@
+/* Users view visual reskin ("uv2" scope).
+   Scoped under .uv2 so no other admin view changes. Follows the Ink & Signal
+   language used on the marketing side: hairline dividers instead of boxed
+   rows, monospace kickers, generous row height, quiet hover, tabular numerals.
+   All colours go through existing semantic tokens — survives dark mode and a
+   future light-admin pass (b8 rule). */
+
+.uv2 .admin-table-card {
+  border-radius: 16px;
+  padding: 22px 24px;
+}
+
+.uv2 .admin-page-head h1 {
+  font-size: 1.9rem;
+  letter-spacing: -0.02em;
+}
+
+.uv2 .page-kicker {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+.uv2 .admin-table-toolbar {
+  gap: 10px;
+  padding: 0 0 18px;
+  border-bottom: none;
+}
+.uv2 .admin-table-search {
+  min-height: 40px;
+  border-radius: 11px;
+  font-size: 14px;
+}
+.uv2 .admin-table-filter {
+  min-height: 40px;
+  border-radius: 11px;
+  font-size: 13.5px;
+}
+
+/* Table: hairline editorial rows */
+.uv2 .admin-table-card > .admin-table-wrap {
+  margin: 0 -6px;
+}
+.uv2 .admin-table {
+  font-size: 14px;
+  min-width: 760px;
+}
+.uv2 .admin-table th {
+  padding: 10px 12px;
+  background: transparent;
+  color: var(--text-faint);
+  font-size: 11px;
+}
+.uv2 .admin-table td {
+  padding: 14px 12px;
+  vertical-align: middle;
+}
+.uv2 .admin-table tbody tr {
+  transition: background 0.12s ease;
+}
+.uv2 .admin-table tr:hover td {
+  background: var(--muted-bg);
+}
+.uv2 .admin-table .cell-main {
+  font-size: 14.5px;
+}
+.uv2 .admin-table .cell-main button {
+  text-decoration-color: var(--hairline, var(--border));
+  text-underline-offset: 3px;
+}
+
+/* Plan + verified badges breathe */
+.uv2 .admin-table td:nth-child(4) .badge,
+.uv2 .admin-table td:nth-child(5) .badge {
+  letter-spacing: 0.01em;
+}
+
+/* Detail drawer cards match the table rhythm */
+.uv2-detail > h3 {
+  font-size: 16px !important;
+  letter-spacing: -0.01em;
+}
+.uv2-detail h4 {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint) !important;
+}
+.uv2 .admin-stat-card {
+  border-radius: 12px;
+}
+
+@media (max-width: 700px) {
+  .uv2 .admin-table-card { padding: 14px; }
+}

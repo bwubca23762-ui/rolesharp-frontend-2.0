@@ -1,0 +1,401 @@
+/* RoleSharp admin — interactive analytics.
+   Feature-scoped: app/compat/* is the frozen legacy bridge and must not grow.
+   Imported by app/admin/layout.tsx. */
+
+/* ============================================================
+   INTERACTIVE ANALYTICS — readable charts, drillable stats
+   ============================================================ */
+
+.admin-page-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+/* ---- STAT CARD: interactive variant ---- */
+.admin-stat-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  font: inherit;
+}
+.admin-stat-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.admin-stat-hint {
+  display: inline-flex;
+  color: var(--text-faint);
+  cursor: help;
+}
+.admin-stat-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+  min-height: 18px;
+}
+.admin-stat-delta {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.admin-stat-delta.up { color: var(--success); }
+.admin-stat-delta.down { color: var(--danger); }
+.admin-stat-delta.flat { color: var(--muted-fg); }
+.admin-sparkline {
+  width: 64px;
+  height: 18px;
+  color: var(--border-strong, var(--muted-fg));
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.admin-stat-card.is-interactive {
+  cursor: pointer;
+  padding-right: 38px;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+.admin-stat-card.is-interactive:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+.admin-stat-card.is-interactive:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.admin-stat-card.is-active {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary) inset;
+}
+.admin-stat-go {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  color: var(--text-faint);
+  transition: color 0.15s, transform 0.15s;
+}
+.admin-stat-card.is-interactive:hover .admin-stat-go {
+  color: var(--primary);
+  transform: translateY(-50%) translateX(2px);
+}
+
+/* ---- DATA ROW: interactive variant ---- */
+.admin-data-row.is-interactive {
+  width: 100%;
+  background: none;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-left: -8px;
+  margin-right: -8px;
+  width: calc(100% + 16px);
+  transition: background 0.12s;
+}
+.admin-data-row.is-interactive:hover { background: var(--surface-2, rgba(127, 127, 127, 0.07)); }
+.admin-data-row.is-interactive:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+/* ---- SEGMENTED CONTROL ---- */
+.admin-segmented {
+  display: inline-flex;
+  /* Five presets on one line measure ~397px, so on a 390px phone "Custom" was
+     clipped by the card edge and the page overflowed sideways. It fit on
+     Windows and not on CI's Linux font stack, which is the kind of margin that
+     decides this. Wrapping keeps every preset visible and tappable; a scroller
+     would hide the last one behind a gesture nothing signals. */
+  flex-wrap: wrap;
+  max-width: 100%;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.admin-segmented button {
+  border: 0;
+  background: none;
+  padding: 6px 13px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted-fg);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.admin-segmented button:hover { color: var(--fg); }
+.admin-segmented button.is-selected {
+  background: var(--primary);
+  color: #fff;
+}
+.admin-segmented button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+/* ---- CHART: readable, trackable ---- */
+.admin-chart-frame {
+  position: relative;
+  touch-action: pan-y;
+  cursor: crosshair;
+  border-radius: 8px;
+}
+.admin-chart-frame svg {
+  display: block;
+  width: 100%;
+  height: 120px;
+  overflow: visible;
+}
+.admin-chart-frame:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+.admin-chart-grid {
+  stroke: var(--divider);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  vector-effect: non-scaling-stroke;
+}
+.admin-chart-crosshair {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--primary);
+  opacity: 0.45;
+  pointer-events: none;
+}
+.admin-chart-dot {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  border: 2px solid var(--surface);
+  pointer-events: none;
+  box-shadow: 0 0 0 1px currentColor;
+}
+.admin-chart-tip {
+  position: absolute;
+  top: -6px;
+  transform: translate(-50%, -100%);
+  background: var(--fg);
+  color: var(--surface);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: var(--shadow-sm);
+}
+.admin-chart-tip.at-start { transform: translate(-8px, -100%); }
+.admin-chart-tip.at-end { transform: translate(calc(-100% + 8px), -100%); }
+.admin-chart-tip b { display: block; font-size: 14px; font-weight: 800; }
+.admin-chart-tip small { opacity: 0.75; }
+.admin-chart-readout {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--text-faint);
+  min-height: 16px;
+}
+
+/* ---- DRAWER ---- */
+.admin-drawer-root { position: fixed; inset: 0; z-index: 90; }
+.admin-drawer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 18, 25, 0.42);
+  animation: admin-drawer-fade 0.18s ease-out;
+}
+.admin-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(560px, 100%);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg, var(--surface));
+  border-left: 1px solid var(--border);
+  box-shadow: -18px 0 48px rgba(15, 18, 25, 0.16);
+  animation: admin-drawer-in 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.admin-drawer-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.admin-drawer-head h2 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
+.admin-drawer-head p { margin: 4px 0 0; font-size: 13px; }
+.admin-drawer-close {
+  flex-shrink: 0;
+  display: inline-flex;
+  padding: 7px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted-fg);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.admin-drawer-close:hover { color: var(--danger); border-color: var(--danger); }
+.admin-drawer-close:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.admin-drawer-body { flex: 1; overflow-y: auto; padding: 18px 22px; }
+.admin-drawer-foot {
+  padding: 14px 22px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@keyframes admin-drawer-in { from { transform: translateX(18px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes admin-drawer-fade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-drawer,
+  .admin-drawer-backdrop { animation: none; }
+  .admin-stat-card.is-interactive,
+  .admin-stat-go { transition: none; }
+  .admin-stat-card.is-interactive:hover { transform: none; }
+}
+
+@media (max-width: 560px) {
+  .admin-page-head-actions { width: 100%; }
+  .admin-segmented { width: 100%; justify-content: space-between; }
+  .admin-drawer { width: 100%; }
+}
+
+/* ---- ANALYTICS TOOLBAR ---- */
+.admin-analytics-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.admin-analytics-custom { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.admin-analytics-meta { font-size: 12px; color: var(--text-faint); margin-left: auto; }
+.admin-analytics-contract { font-size: 12px; margin: 0 0 20px; }
+.admin-autorefresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted-fg);
+  cursor: pointer;
+  user-select: none;
+}
+.admin-autorefresh input { accent-color: var(--primary); cursor: pointer; }
+.admin-linkish {
+  border: 0;
+  background: none;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  cursor: pointer;
+}
+.admin-linkish:hover { text-decoration: underline; }
+.admin-linkish:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+
+/* ---- HOUR BARS ---- */
+.admin-hour-bars { display: flex; align-items: flex-end; gap: 3px; height: 132px; padding-top: 8px; }
+.admin-hour-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  height: 100%;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.admin-hour-bar:hover .admin-hour-fill { opacity: 1; }
+.admin-hour-bar:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+.admin-hour-count { font-size: 10px; font-weight: 600; color: var(--muted-fg); }
+.admin-hour-fill {
+  width: 100%;
+  max-width: 30px;
+  background: var(--primary);
+  border-radius: 4px 4px 0 0;
+  opacity: 0.75;
+  transition: opacity 0.15s;
+}
+.admin-hour-label { font-size: 10px; color: var(--text-faint); }
+
+/* ---- BREAKDOWN (drawer) ---- */
+.admin-breakdown-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-fg);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.admin-breakdown { list-style: none; margin: 0; padding: 0; counter-reset: breakdown; }
+.admin-breakdown li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 11px 10px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--divider);
+  isolation: isolate;
+}
+.admin-breakdown-bar {
+  position: absolute;
+  inset: 2px auto 2px 0;
+  background: var(--primary);
+  opacity: 0.09;
+  border-radius: 6px;
+  z-index: -1;
+}
+.admin-breakdown-label { word-break: break-word; min-width: 0; }
+.admin-breakdown-value { display: flex; align-items: baseline; gap: 8px; font-weight: 700; white-space: nowrap; }
+.admin-breakdown-value small { font-weight: 600; color: var(--text-faint); font-size: 11px; }
+
+@media (max-width: 560px) {
+  .admin-analytics-meta { margin-left: 0; width: 100%; }
+  .admin-hour-count { display: none; }
+}

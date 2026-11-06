@@ -1,0 +1,99 @@
+# Dependencies and framework output
+node_modules/
+.next/
+bin/
+.next-playwright/
+.next-qa-build/
+tsconfig.jobs-qa.json
+.omo/
+/out/
+/dist/
+/build/
+/coverage/
+.turbo/
+.cache/
+
+# Test and browser artifacts
+playwright-report/
+test-results/
+blob-report/
+/outputs/
+.nyc_output/
+*.lcov
+
+# Environment and runtime secrets
+.env
+.env.local
+.env.production
+.env.*.local
+*.log
+
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# TypeScript and operating-system artifacts
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+/data/dumps
+
+# Extra safety
+.env.bak*
+.env.*.bak
+/data
+/db/dumps
+
+# Beads / Dolt files (added by bd init)
+.beads/
+.dolt/
+*.db
+.beads-credential-key
+
+# Local development and editor state
+/.local/
+.vscode/
+.zcode
+.kiro/
+.kombai/
+frame_*.jpg
+
+# Raw scanner output is reproducible; keep the concise audit reports.
+/audits/*-console.txt
+
+# Credentials must never enter a source snapshot or deployment bundle.
+.ssh/
+*.pem
+*.key
+*private*key*
+C*Usershyper/
+.rotate-vps-key.sh
+.workbuddy-ai/
+.release-manifest.sha256
+
+# Build output. Must stay in sync with tsconfig.json "exclude" and
+# eslint.config.mjs "ignores" — see tests/reliability-fixes.test.ts.
+# .local/build-backups once produced 49,912 phantom lint problems because it
+# was gitignored, so git status never revealed it.
+.next
+.next-*
+/bin/
+/outputs/ui-overhaul-*
+
+# Agent tooling scratch. Per-machine agent permissions; .claude/launch.json is
+# shared and stays tracked.
+.gstack/
+.superdesign/tmp/
+.claude/*
+!.claude/launch.json
+.claude/settings.local.json
+
+# Outreach tracker holds third-party contact emails — keep it local, not in the repo.
+docs/growth/OUTREACH-TRACKER.csv
+data/voice-cache/

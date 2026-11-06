@@ -1,0 +1,118 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    # Raised from 25 when the browser suite was added: it costs roughly six
+    # minutes locally plus the one-off chromium download.
+    timeout-minutes: 40
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: rolesharp_ci
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d rolesharp_ci"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      CI: "true"
+      NODE_ENV: production
+      SITE_URL: https://rolesharp.com
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/rolesharp_ci
+      DB_INTEGRITY_TEST: "true"
+      REDIS_URL: redis://127.0.0.1:6379
+      ROUTE_AUDIT_TIMEOUT_MS: "30000"
+      AUTH_SECRET: ci-only-not-used-in-production
+      ADMIN_TOTP_SECRET: JBSWY3DPEHPK3PXP
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # deploy.sh builds a large double-quoted SSH command; an unescaped $(...)
+      # expands on the LOCAL host and silently corrupts the remote script.
+      # bash -n catches syntax breakage; the quoting convention is reviewed by
+      # hand (see the escaped \$(...) in the activation block).
+      - run: bash -n deploy.sh
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci --include=dev
+      - run: npm run test:db
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm audit --audit-level=high
+      - run: npm run build
+      - name: Exercise pages and every API method
+        run: |
+          npm run start > /tmp/rolesharp-ci-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:3000/ > /dev/null; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              cat /tmp/rolesharp-ci-server.log
+              exit 1
+            fi
+            sleep 1
+          done
+          ROUTE_AUDIT_MUTATIONS=true npm run audit:routes
+
+      # The browser suite is the only gate that asserts behaviour rather than
+      # source text. It runs last and after test:db, which leaves the database
+      # fully migrated -- /privacy, /terms and /refund are server-rendered from
+      # legal_document_versions and show a "temporarily unavailable" placeholder
+      # without it.
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+      - name: Browser end-to-end suite
+        # This suite runs `next dev`, so it must not inherit the job's
+        # NODE_ENV=production. Two things break if it does: Next's edge sandbox
+        # disallows code generation from strings in production, and the dev
+        # middleware bundle is eval-wrapped, so every request 500s with
+        # `EvalError: Code generation from strings disallowed for this context`;
+        # and /dev/jobs-primitives -- the readiness URL -- calls notFound()
+        # outside development. The server never became ready and zero tests ran.
+        env:
+          NODE_ENV: development
+        run: npx playwright test --reporter=line
+
+      - name: Upload end-to-end failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-evidence
+          path: .omo/evidence/**
+          retention-days: 7
+          if-no-files-found: ignore

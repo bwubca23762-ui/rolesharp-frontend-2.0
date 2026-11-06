@@ -1,0 +1,34 @@
+{
+  "targets": {
+    "landing": {
+      "projectId": "84b8e7ee-45f2-4937-9669-2d430399837e",
+      "activeDraftId": "eaaa4bd1-7a20-4dfc-ae22-55ea9fd78017",
+      "currentVersion": 2,
+      "direction": "RoleSharp 2.0 — evidence-led landing with one primary conversion path",
+      "brandAssets": {
+        "logo": {
+          "assetKey": "public-icon-512.png",
+          "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/84b8e7ee-45f2-4937-9669-2d430399837e/brand-assets/public-icon-512.png/icon-512.png"
+        }
+      },
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        ".superdesign/init/theme.md",
+        "app/globals.css:1:300",
+        "app/page.tsx",
+        "components/marketing/ModernHeroAndMethod.tsx",
+        "components/marketing/ProductDemoStage.tsx",
+        "components/marketing/ModernPlans.tsx"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "3e1a3bcf4396ae177c5e1d460ae5ca0e06b8351dc72aa12ff911f729a8d695ee",
+        ".superdesign/init/theme.md": "c2e3c09bf7097a28edede532edbdb26f2931a23abf762d25438e4a00b1c5c8e5",
+        "app/globals.css": "c4dc62cd819e85e2cd208792b7afa3856c71a8f44c55bd4697981825f82cde6d",
+        "app/page.tsx": "fc6cc0223b72701f9938962c7402fae92a90009e70f10b6916d8af9ab0f38136",
+        "components/marketing/ModernHeroAndMethod.tsx": "c05165ed5e41adb1239310c31f93f21b23e1b35430a6f14a355ee6822bc7a707",
+        "components/marketing/ProductDemoStage.tsx": "c35acb72a76ea9146c8f94893ff896acf3e3cc4b0f922b33d912df91bb1b167f",
+        "components/marketing/ModernPlans.tsx": "aa145149282dad1256317e82cadcf2ebdd4ac1521b8b616ef82b1b4712455430"
+      }
+    }
+  }
+}

@@ -1,0 +1,129 @@
+/* Company ticker wall.
+   Two rows drifting in opposite directions. The track holds the same list
+   twice and translates by exactly -50%, so the loop closes with no visible
+   jump. Motion is CSS-only -- no JS, no measurement, nothing to hydrate. */
+
+.rs-ticker {
+  position: relative;
+  overflow: hidden;
+  padding: 6px 0;
+  /* Fade the ends instead of hard-cropping, so items enter and leave rather
+     than appearing to be sliced by the container edge. */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+
+.rs-ticker-track {
+  display: flex;
+  width: max-content;
+  gap: 10px;
+  animation: rs-ticker-drift var(--rs-ticker-duration, 64s) linear infinite;
+  will-change: transform;
+}
+
+.rs-ticker-track[data-direction="reverse"] {
+  animation-direction: reverse;
+}
+
+/* display:contents so the two halves do not become flex items themselves --
+   the pills stay direct children and the gap between them stays uniform
+   across the seam. */
+.rs-ticker-group {
+  display: contents;
+}
+
+/* Pause while the pointer is over the wall or while a link inside it has
+   keyboard focus -- a name you are trying to read should hold still. */
+.rs-ticker:hover .rs-ticker-track,
+.rs-ticker:focus-within .rs-ticker-track {
+  animation-play-state: paused;
+}
+
+/* The visible pause control (app/ticker-pause.tsx) sets this attribute on
+   <html>, holding both rows for touch users and anyone the drift distracts.
+   !important because it must beat the hover/focus rules above, not race them. */
+:root[data-ticker-paused] .rs-ticker-track {
+  animation-play-state: paused !important;
+}
+
+@keyframes rs-ticker-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+.rs-ticker-item {
+  flex: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 9px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: -0.015em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.18s, color 0.18s, transform 0.18s, background 0.18s;
+}
+
+.rs-ticker-item span {
+  /* 12px, not 11px: this is body-adjacent text (the sector label inside a
+     link), and 11px failed the ~12px readability floor on mobile. */
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.rs-ticker-item:hover,
+.rs-ticker-item:focus-visible {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-surface-2);
+  transform: translateY(-2px);
+}
+
+.rs-ticker-item:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+:root[data-theme="dark"] .rs-ticker-item {
+  border-color: var(--color-dark-border);
+  background: var(--color-dark-surface);
+  color: var(--color-dark-text);
+}
+
+:root[data-theme="dark"] .rs-ticker-item span {
+  color: var(--color-dark-text-muted);
+}
+
+:root[data-theme="dark"] .rs-ticker-item:hover,
+:root[data-theme="dark"] .rs-ticker-item:focus-visible {
+  background: var(--color-dark-surface-2);
+}
+
+/* Reduced motion: stop the drift and let the rows wrap into a static wall.
+   The content stays fully reachable rather than being frozen mid-scroll with
+   half of it clipped outside the viewport. */
+@media (prefers-reduced-motion: reduce) {
+  .rs-ticker {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .rs-ticker-track {
+    animation: none;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .rs-ticker-group[data-clone="true"] {
+    display: none;
+  }
+  .rs-ticker-item:hover {
+    transform: none;
+  }
+}

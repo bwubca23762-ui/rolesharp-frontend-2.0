@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "allowedSchemes": ["https:", "http:"],
+  "dropParameters": ["fbclid", "gclid", "mc_cid", "mc_eid", "ref", "referrer", "source"],
+  "dropParameterPrefixes": ["utm_"],
+  "unverifiedRedirectHosts": [
+    "indeed.com",
+    "www.indeed.com",
+    "linkedin.com",
+    "www.linkedin.com",
+    "glassdoor.com",
+    "www.glassdoor.com"
+  ]
+}

@@ -1,0 +1,39 @@
+[Unit]
+Description=RoleSharp job alert email sender
+After=network-online.target docker.service resume-web.service
+Wants=network-online.target
+
+[Service]
+UMask=0027
+Type=simple
+User=rolesharp
+Group=rolesharp
+WorkingDirectory=/opt/resume-ai/current
+EnvironmentFile=/opt/resume-ai/.env
+Environment=NODE_ENV=production
+# The script loops internally on a 30-minute tick and handles SIGTERM itself,
+# so this is Restart=always like the blog worker, not a oneshot+timer.
+ExecStart=/usr/bin/npm run worker:job-alerts
+Restart=always
+RestartSec=5
+TimeoutStopSec=330
+KillSignal=SIGTERM
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadWritePaths=/opt/resume-ai/data
+MemoryMax=1G
+TasksMax=128
+
+[Install]
+WantedBy=multi-user.target

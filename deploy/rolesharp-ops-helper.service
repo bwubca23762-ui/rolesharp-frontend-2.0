@@ -1,0 +1,36 @@
+[Unit]
+Description=RoleSharp privileged systemd control helper for the admin panel
+After=network.target
+
+[Service]
+Type=simple
+# Runs as root because it calls systemctl, but the effective GROUP is rolesharp
+# so the socket it creates is group-owned by the web user. That, plus chmod 0660
+# inside the helper, is the entire access boundary -- resume-web keeps
+# NoNewPrivileges=true and never gets sudo.
+User=root
+Group=rolesharp
+UMask=0007
+WorkingDirectory=/opt/resume-ai/current
+ExecStart=/usr/bin/node /opt/resume-ai/current/scripts/ops-helper.mjs
+Restart=always
+RestartSec=5
+
+# The helper only needs to exec systemctl and own its socket in /run.
+NoNewPrivileges=false
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/run /opt/resume-ai/data/backups
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX
+MemoryMax=128M
+TasksMax=32
+
+[Install]
+WantedBy=multi-user.target

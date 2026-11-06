@@ -1,0 +1,35 @@
+[Unit]
+Description=Antigravity Claude Proxy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=claudeproxy
+Group=claudeproxy
+WorkingDirectory=/var/lib/claudeproxy
+Environment=HOME=/var/lib/claudeproxy
+Environment=HOST=127.0.0.1
+Environment=PORT=8080
+ExecStart=/usr/bin/antigravity-claude-proxy start --log
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadWritePaths=/var/lib/claudeproxy
+MemoryMax=1G
+TasksMax=256
+
+[Install]
+WantedBy=multi-user.target

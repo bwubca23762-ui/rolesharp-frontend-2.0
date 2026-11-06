@@ -1,0 +1,20 @@
+/* Admin shadcn/ui surface — dark-mode repoint of the --color-admin-* tokens.
+   Light values live in app/globals.css @theme. Namespaced so this can never
+   touch the public-site --color-* tokens; it only repoints the admin set when
+   the app is in dark mode ([data-theme="dark"], matching the repo's dark axis). */
+[data-theme="dark"] {
+  --color-admin-bg: #0B1220;
+  --color-admin-fg: #E2E8F0;
+  --color-admin-surface: #0F1B2E;
+  --color-admin-border: #22344C;
+  --color-admin-input: #22344C;
+  --color-admin-ring: #64748B;
+  --color-admin-muted: #16233A;
+  --color-admin-muted-fg: #9FB3C8;
+  --color-admin-secondary: #16233A;
+  --color-admin-secondary-fg: #E2E8F0;
+  --color-admin-accent: #16233A;
+  --color-admin-accent-fg: #E2E8F0;
+  --color-admin-popover: #101E33;
+  --color-admin-popover-fg: #E2E8F0;
+}

@@ -1,0 +1,29 @@
+[Unit]
+Description=RoleSharp web health watchdog (restarts resume-web when it stops answering)
+After=network.target resume-web.service
+
+[Service]
+Type=oneshot
+# Root because it calls systemctl. It reads nothing, writes only its cooldown
+# stamp in /run, and talks to loopback only.
+User=root
+ExecStart=/opt/resume-ai/current/scripts/watchdog.sh
+TimeoutStartSec=120
+# Redis is intentionally containerized on the VPS. The host does not install
+# redis-cli, so use the container command for the worker-heartbeat probe.
+Environment="WATCHDOG_REDIS_CLI=docker exec resume-redis redis-cli"
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/run
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+MemoryMax=64M
+TasksMax=16

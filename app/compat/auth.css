@@ -1,0 +1,79 @@
+/* Authentication and login surfaces; provenance: globals-compat.css lines 1486-1671. */
+/* === AUTH / LOGIN PAGE === */
+.auth-copy .lead {
+  color: var(--muted-fg);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  max-width: 540px;
+  margin: 0 0 var(--space-6);
+}
+
+/* Auth Card - premium form container */
+.auth-card {
+  box-shadow: var(--shadow-premium);
+  padding: var(--space-8);
+  border-radius: var(--radius-lg);
+}
+.auth-card h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--h2-weight);
+  color: var(--fg);
+  margin: 0 0 var(--space-2);
+}
+
+/* Auth form field spacing */
+.auth-card .label {
+  margin-top: var(--space-4);
+}
+.auth-card .field {
+  margin: var(--space-2) 0 var(--space-4);
+}
+
+/* Email verification notice */
+.auth-card .ok,
+.auth-card p[role="status"] {
+  background: rgba(5, 150, 105, 0.06);
+  border: 1px solid rgba(5, 150, 105, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--success);
+  margin: var(--space-4) 0;
+}
+
+/* Auth error message */
+.auth-card .err,
+.auth-card p[role="alert"] {
+  background: rgba(220, 38, 38, 0.05);
+  border: 1px solid rgba(220, 38, 38, 0.15);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: 14px;
+  color: var(--danger);
+  margin: var(--space-4) 0;
+}
+
+/* Dark mode auth enhancements */
+[data-theme="dark"] .auth-card {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+[data-theme="dark"] .auth-card .ok,
+[data-theme="dark"] .auth-card p[role="status"] {
+  background: rgba(5, 150, 105, 0.1);
+  border-color: rgba(5, 150, 105, 0.3);
+}
+[data-theme="dark"] .auth-card .err,
+[data-theme="dark"] .auth-card p[role="alert"] {
+  background: rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.25);
+}
+.empty-state { text-align:center; padding:44px 24px; }
+.empty-state p { max-width:520px; margin:0 auto 18px; }
+.skeleton-card { display:flex; align-items:center; gap:10px; color:var(--muted-fg); }
+.resume-list { display:grid; gap:12px; margin-top:14px; }
+.resume-row { display:flex; justify-content:space-between; align-items:center; gap:18px; padding:16px 18px; }
+

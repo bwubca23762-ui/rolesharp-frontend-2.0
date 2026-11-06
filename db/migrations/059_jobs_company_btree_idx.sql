@@ -1,0 +1,11 @@
+-- Serves the "Reposted" ghost-job signal (lib/jobs.ts flagReposts): each
+-- jobs-list page's rows probe expired same-company listings. Measured on the
+-- production table (227K live rows, EXPLAIN (ANALYZE, BUFFERS), 50-row page):
+-- the only index that could serve company equality was jobs_company_trgm_idx,
+-- whose trigram-equality bitmap scans cost ~14.5ms per probe — 741ms per
+-- request across 50 probes, paid on every list render. A plain btree on
+-- (company) turns each probe into a range scan; the expires_at /
+-- first_seen_at / similarity predicates then filter a handful of rows.
+-- A partial index on "expired" rows is impossible here: expires_at <= now()
+-- is volatile and cannot appear in an index predicate.
+create index if not exists jobs_company_btree_idx on jobs (company);

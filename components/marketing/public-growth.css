@@ -1,0 +1,261 @@
+/* The discovery pages share type and rhythm with the application desk. */
+.growth-page {
+  --growth-rule: var(--border);
+  --growth-gutter: clamp(20px, 4vw, 48px);
+}
+
+.growth-page h1 {
+  max-inline-size: 23ch;
+  text-wrap: balance;
+}
+
+.growth-page :is(h2, h3) {
+  text-wrap: pretty;
+}
+
+.growth-page :is(a, button, summary):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.growth-page :is(a, button) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.growth-page :is(h2[id], section[id], .growth-letter[id]) {
+  scroll-margin-block-start: 6rem;
+}
+
+.growth-page > header,
+.growth-students > section:first-of-type,
+.growth-search .jobs-hero {
+  background: var(--surface);
+  box-shadow: inset 0 -1px var(--growth-rule);
+}
+
+.growth-page > header h1,
+.growth-page .growth-opening h1,
+.growth-students > section:first-of-type h1,
+.growth-talent h1 {
+  font-size: clamp(2rem, 4.6vw, 3.625rem) !important;
+}
+
+.growth-page > header p,
+.growth-page .growth-opening p {
+  max-inline-size: 65ch;
+}
+
+.growth-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-block-start: 24px;
+  padding-block: 12px;
+  border-block: 1px solid var(--growth-rule);
+}
+
+.growth-index a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 36px;
+  color: var(--primary);
+  font-size: .875rem;
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+
+.growth-index a:hover {
+  text-decoration: underline;
+}
+
+.growth-letter {
+  background: var(--surface) !important;
+  box-shadow: none !important;
+}
+
+.growth-pricing .desk-plan-grid {
+  gap: 1px;
+  background: var(--growth-rule);
+  border: 1px solid var(--growth-rule);
+  border-radius: 14px;
+  overflow: clip;
+}
+
+.growth-pricing .desk-plan {
+  border: 0;
+  border-radius: 0;
+  min-inline-size: 0;
+}
+
+.growth-pricing .desk-plan dl {
+  margin-bottom: 0;
+}
+
+.growth-pricing .desk-plan dd {
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.growth-list {
+  display: grid;
+  padding: 0;
+  margin-block: 28px 0;
+  list-style: none;
+  border-block: 1px solid var(--growth-rule);
+}
+
+.growth-list > li {
+  min-inline-size: 0;
+  padding: 20px 0;
+}
+
+.growth-list > li + li {
+  border-block-start: 1px solid var(--growth-rule);
+}
+
+.growth-list h3 {
+  color: var(--fg);
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.growth-list p {
+  color: var(--muted-fg);
+  margin: 6px 0 0;
+  max-inline-size: 44ch;
+  font-size: .9375rem;
+  line-height: 1.5;
+}
+
+.growth-library :is(.growth-library-section, .growth-library-link) {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.growth-library .growth-library-section {
+  border: 0;
+  border-radius: 0;
+  border-block-start: 1px solid var(--growth-rule);
+  padding-inline: 0;
+}
+
+.growth-library .growth-library-link {
+  border-radius: 8px;
+  border-color: var(--growth-rule);
+  transform: none;
+}
+
+.growth-library .growth-library-link:hover {
+  background: var(--surface-2) !important;
+  border-color: var(--primary);
+}
+
+.growth-demo {
+  margin-block-start: 24px;
+  border: 1px solid var(--growth-rule);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: clamp(8px, 2vw, 20px);
+}
+
+.growth-demo iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 8px;
+}
+
+.growth-search .jobs-hero h1 {
+  max-inline-size: 28ch;
+}
+
+.growth-search .jobs-hero :where(.container) {
+  padding-block: clamp(24px, 3.5vw, 44px);
+}
+
+.growth-talent .growth-empty {
+  border: 0;
+  border-radius: 0;
+  border-block: 1px solid var(--growth-rule);
+  background: transparent;
+  padding: 24px 0;
+  box-shadow: none;
+}
+
+@media (min-width: 768px) {
+  .growth-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .growth-list > li {
+    padding: 20px var(--growth-gutter);
+  }
+
+  .growth-list > li:first-child {
+    padding-inline-start: 0;
+  }
+
+  .growth-list > li:last-child {
+    padding-inline-end: 0;
+  }
+
+  .growth-list > li + li {
+    border-block-start: 0;
+    border-inline-start: 1px solid var(--growth-rule);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .growth-page :is(a, button, .growth-library-link) {
+    transition: none !important;
+  }
+
+  .growth-page {
+    scroll-behavior: auto;
+  }
+}
+
+.growth-questions {
+  border-block-start: 1px solid var(--growth-rule);
+}
+
+.growth-questions details {
+  border-block-end: 1px solid var(--growth-rule);
+}
+
+.growth-question-mark {
+  flex: none;
+  color: var(--primary);
+  font-size: 1.25rem;
+}
+
+.growth-question-mark::before {
+  content: "+";
+}
+
+.growth-questions details[open] .growth-question-mark::before {
+  content: "−";
+}
+
+.growth-faq > div > h2 {
+  text-align: start;
+}
+
+.growth-faq > div > .grid {
+  gap: 0 clamp(24px, 4vw, 56px);
+}
+
+.growth-faq > div > .grid > div {
+  border: 0;
+  border-radius: 0;
+  border-block-start: 1px solid var(--growth-rule);
+  background: transparent;
+  padding: 16px 0;
+}
+
+.growth-faq > div > .grid > div > p {
+  max-inline-size: 62ch;
+  font-size: .875rem;
+  line-height: 1.5;
+}

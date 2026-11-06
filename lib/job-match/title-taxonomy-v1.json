@@ -1,0 +1,16 @@
+{
+  "_comment": "SIZE_OK: pure closed-world v1 title-family taxonomy data.",
+  "version": "job-match-normalization-v1",
+  "titles": [
+    { "id": "product_designer", "canonical": "Product Designer", "family": "product_design", "track": "individual", "aliases": ["product design specialist", "digital product designer"], "relatedFamilies": ["ux_research"] },
+    { "id": "ux_designer", "canonical": "UX Designer", "family": "product_design", "track": "individual", "aliases": ["user experience designer", "interaction designer"], "relatedFamilies": ["ux_research"] },
+    { "id": "ui_designer", "canonical": "UI Designer", "family": "product_design", "track": "individual", "aliases": ["user interface designer"], "relatedFamilies": ["ux_research"] },
+    { "id": "ux_researcher", "canonical": "UX Researcher", "family": "ux_research", "track": "individual", "aliases": ["user experience researcher", "user researcher"], "relatedFamilies": ["product_design"] },
+    { "id": "product_design_manager", "canonical": "Product Design Manager", "family": "product_design", "track": "management", "aliases": ["design manager"], "relatedFamilies": [] },
+    { "id": "software_engineer", "canonical": "Software Engineer", "family": "software_engineering", "track": "individual", "aliases": ["software developer"], "relatedFamilies": ["data_engineering"] },
+    { "id": "frontend_engineer", "canonical": "Frontend Engineer", "family": "software_engineering", "track": "individual", "aliases": ["front end engineer", "frontend developer"], "relatedFamilies": ["product_design"] },
+    { "id": "engineering_manager", "canonical": "Engineering Manager", "family": "software_engineering", "track": "management", "aliases": ["software engineering manager"], "relatedFamilies": [] },
+    { "id": "data_engineer", "canonical": "Data Engineer", "family": "data_engineering", "track": "individual", "aliases": ["data platform engineer"], "relatedFamilies": ["software_engineering"] },
+    { "id": "registered_nurse", "canonical": "Registered Nurse", "family": "nursing", "track": "individual", "aliases": ["rn"], "relatedFamilies": [] }
+  ]
+}

@@ -1,0 +1,41 @@
+name: Discover free course candidates
+
+on:
+  schedule:
+    - cron: "23 8 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: free-course-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check official provider catalogs
+        run: node scripts/discover-free-course-candidates.mjs
+      - name: Open review issue for new links
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if grep -q "^- \*\*" /tmp/free-course-candidates.md; then
+            title="Review newly discovered free course candidates"
+            existing="$(gh issue list --state open --search 'in:title Review newly discovered free course candidates' --json number --jq '.[0].number // empty')"
+            if [ -z "$existing" ]; then
+              gh issue create --title "$title" --body-file /tmp/free-course-candidates.md
+            else
+              gh issue comment "$existing" --body-file /tmp/free-course-candidates.md
+            fi
+          else
+            echo "No candidates to review."
+          fi

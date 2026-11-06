@@ -1,0 +1,44 @@
+/* Final, scoped surface layer for legacy admin views. Shared primitives and
+   public pages retain their own tokens; component behavior stays unchanged. */
+.admin-workspace :is(.admin-table-card, .admin-chart-card, .admin-dashboard-panel, .admin-priority-panel, .admin-action-strip) {
+  border: 1px solid var(--color-admin-border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: none;
+  backdrop-filter: none;
+  min-width: 0;
+}
+.admin-workspace :is(.admin-table-card, .admin-chart-card, .admin-dashboard-panel):focus-within {
+  border-color: color-mix(in srgb, var(--color-admin-ring) 60%, var(--color-admin-border));
+}
+.admin-workspace .admin-table-wrap {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  border-radius: 0;
+}
+.admin-workspace .admin-table th {
+  color: var(--color-admin-muted-fg);
+  background: var(--color-admin-muted);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+.admin-workspace .admin-table td {
+  color: var(--color-admin-fg);
+  border-color: var(--color-admin-border);
+  padding-block: 14px;
+  font-size: 13px;
+}
+.admin-workspace .admin-table tbody tr:hover {
+  background: color-mix(in srgb, var(--color-admin-muted) 65%, transparent);
+}
+.admin-workspace :is(input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-admin-ring);
+  outline-offset: 2px;
+}
+.admin-workspace .admin-row-actions { flex-wrap: wrap; gap: 8px; }
+@media (max-width: 640px) {
+  .admin-workspace :is(.admin-table-toolbar, .admin-action-strip) { flex-wrap: wrap; }
+  .admin-workspace .admin-table-filter { max-width: 100%; min-width: 0; }
+}

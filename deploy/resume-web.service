@@ -1,0 +1,38 @@
+[Unit]
+Description=RoleSharp Next.js web service
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+UMask=0027
+Type=simple
+User=rolesharp
+Group=rolesharp
+WorkingDirectory=/opt/resume-ai/current
+EnvironmentFile=/opt/resume-ai/.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/npm run start
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+# Next writes optimized images to .next/cache and ISR/prerender refreshes to
+# .next/server/app. Both must remain writable under ProtectSystem=strict.
+ReadWritePaths=/opt/resume-ai/current/.next/cache /opt/resume-ai/current/.next/server/app /opt/resume-ai/data
+MemoryMax=2G
+TasksMax=512
+
+[Install]
+WantedBy=multi-user.target

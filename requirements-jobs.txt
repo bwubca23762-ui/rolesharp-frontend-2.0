@@ -1,0 +1,25 @@
+# Exact versions from the verified Linux/Python 3.12 release.
+annotated-types==0.8.0
+beautifulsoup4==4.15.0
+certifi==2026.10.23
+charset-normalizer==3.5.2
+idna==3.20
+markdownify==0.13.1
+numpy==1.26.3
+pandas==2.3.3
+psycopg-binary==3.2.9
+psycopg[binary]==3.2.9
+pydantic==2.14.2
+pydantic-core==2.50.2
+python-dateutil==4.0.0
+python-jobspy==1.1.82
+pytz==2026.6
+regex==2024.11.6
+requests==2.34.2
+six==1.17.0
+soupsieve==4.0.1
+tls-client==1.0.1
+typing-extensions==4.16.0
+typing-inspection==0.4.5
+tzdata==2026.6
+urllib3==2.8.0

@@ -1,0 +1,46 @@
+[Unit]
+# The communications outbox drains one batch and exits — `npm run
+# worker:communications` is `tsx worker/communications-outbox.ts --once`. That
+# is why this is Type=oneshot driven by a timer rather than a Restart=always
+# service like the other workers: a simple service running a --once command
+# would exit immediately and systemd would restart it in a hot loop.
+#
+# It had no unit at all. The script existed, the npm target existed, and nothing
+# on the box ever ran it, so campaign sends only moved when someone invoked it
+# by hand. Hardening mirrors rolesharp-blog-worker.service.
+Description=RoleSharp compliant communications outbox (one batch)
+After=network-online.target docker.service resume-web.service
+Wants=network-online.target
+
+[Service]
+UMask=0027
+Type=oneshot
+User=rolesharp
+Group=rolesharp
+WorkingDirectory=/opt/resume-ai/current
+EnvironmentFile=/opt/resume-ai/.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/npm run worker:communications
+# A batch that has not finished in five minutes is wedged, not slow. Killing it
+# is safe: sends are claimed under a lease and a stuck row is now resolved by
+# recoverStuckSends() rather than being stranded in `sending` forever.
+TimeoutStartSec=300
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadWritePaths=/opt/resume-ai/data
+MemoryMax=1G
+TasksMax=128
+
+[Install]
+WantedBy=multi-user.target
