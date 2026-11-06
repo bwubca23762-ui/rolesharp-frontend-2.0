@@ -680,7 +680,7 @@ export default function ResumeMaker() {
 
           <div className="form-grid">
             <div><label className="label" htmlFor="maker-name">Full name</label><input id="maker-name" autoComplete="name" className="field" value={name} onChange={(e) => setName(e.target.value)} placeholder="Aisha Khan" /></div>
-            <div><label className="label" htmlFor="maker-headline">Headline / target title</label><input id="maker-headline" className="field" value={headline} onChange={(e) => setHeadline(e.target.value)} placeholder="Software Engineer" /></div>
+            <div><label className="label" htmlFor="maker-headline">Headline or target title</label><input id="maker-headline" className="field" value={headline} onChange={(e) => setHeadline(e.target.value)} placeholder="Software Engineer" /></div>
             <div><label className="label" htmlFor="maker-email">Email</label><input id="maker-email" autoComplete="email" type="email" className="field" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@email.com" /></div>
             <div><label className="label" htmlFor="maker-phone">Phone</label><input id="maker-phone" autoComplete="tel" type="tel" className="field" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+1 555 0100" /></div>
             <div><label className="label" htmlFor="maker-linkedin">LinkedIn profile</label><input id="maker-linkedin" className="field" value={linkedin} onChange={(e) => setLinkedin(e.target.value)} placeholder="linkedin.com/in/your-name" /></div>

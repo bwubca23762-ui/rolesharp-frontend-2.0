@@ -67,7 +67,7 @@ export default function JobsPage() {
       <JobsFinder
         resultLabel="jobs"
         heroKicker={`Fresh listings — ${JOB_COUNTRIES.length} countries`}
-        heroTitle="Find jobs by country"
+        heroTitle="Find fresh jobs in your country"
         heroSubtitle="Search recent listings by country, compare openings, and use the job description to tailor a resume."
       />
 

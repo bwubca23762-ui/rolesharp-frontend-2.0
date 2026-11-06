@@ -63,9 +63,9 @@ export function ModernHeroAndMethod({ studentOfferEnabled = false }: { studentOf
                   <span>Free resume tools — No signup required</span>
                 </div>
 
-                <h1 className="mt-5 text-[clamp(2.35rem,4.5vw,3.75rem)] font-extrabold! leading-[1.03]! tracking-[-0.04em]! text-[var(--fg)] text-balance">
+                <h2 className="mt-5 text-[clamp(2.35rem,4.5vw,3.75rem)] font-extrabold! leading-[1.03]! tracking-[-0.04em]! text-[var(--fg)] text-balance">
                   Your resume, sharpened for one exact job.
-                </h1>
+                </h2>
 
                 <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--muted-fg)] md:text-lg md:leading-8">
                   Score it against any job, fix what the ATS actually reads, then tailor every line from evidence you already have.{" "}

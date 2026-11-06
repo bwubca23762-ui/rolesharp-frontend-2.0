@@ -128,7 +128,7 @@ export default function GenerationReview({
   const isJdShort = (request.jdText?.trim().length || 0) < 50;
 
   return (
-    <div id="step-review-confirm" className="review-step-workspace card p-5 sm:p-8 space-y-6">
+    <div id="step-review-confirm" role="dialog" aria-label="Review your resume details" aria-modal="false" className="review-step-workspace card p-5 sm:p-8 space-y-6">
       {/* 1. Header Banner */}
       <header className="border-b border-[var(--hairline)] pb-5 space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-2">

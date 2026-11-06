@@ -36,8 +36,7 @@ export function RoleSharpLanding() {
       <section className={styles.hero} aria-labelledby="landing-title">
         <div className={styles.heroCopy}>
           <h1 id="landing-title">
-            <span>RoleSharp:</span>{" "}
-            <span>One step ahead towards a successful career.</span>
+            Tailor your resume to the job.
           </h1>
           <p className={styles.lede}>
             Turn the work you have done into a resume that a hiring team can
@@ -45,9 +44,12 @@ export function RoleSharpLanding() {
           </p>
           <div className={styles.heroActions}>
             <Link className={styles.primaryAction} href="/checker">
-              Check your resume <ArrowRight size={17} aria-hidden="true" />
+              Check my resume free <ArrowRight size={17} aria-hidden="true" />
             </Link>
-            <Link className={styles.secondaryAction} href="/resume-templates">
+            <Link className={styles.secondaryAction} href="/build">
+              Build a tailored resume
+            </Link>
+            <Link className="sr-only" href="/resume-templates">
               Browse templates
             </Link>
           </div>
@@ -55,7 +57,7 @@ export function RoleSharpLanding() {
             Start with a PDF, DOCX, or pasted text. No card required.
           </p>
         </div>
-        <div
+        <figure
           className={styles.productStage}
           aria-label="Example of RoleSharp connecting resume evidence to a job requirement"
         >
@@ -86,21 +88,26 @@ export function RoleSharpLanding() {
           <aside className={styles.evidence}>
             <div>
               <Check size={16} aria-hidden="true" />
-              <strong>Supported by the resume</strong>
+              <h3>Supported by the resume</h3>
               <p>
                 The 12% lift is a concrete outcome the hiring team can evaluate.
               </p>
             </div>
             <div>
               <Search size={16} aria-hidden="true" />
-              <strong>Check before adding</strong>
+              <h3>Check before adding</h3>
               <p>
                 The role asks for pricing tests. This resume shows onboarding
                 tests.
               </p>
             </div>
+            <div className="desk-source mt-3 text-xs border-t border-[var(--hairline)] pt-2">
+              <dt className="font-semibold text-[var(--fg)]">Sample source</dt>
+              <dd className="text-[var(--muted-fg)]">Onboarding release notes and experiment results</dd>
+            </div>
           </aside>
-        </div>
+          <figcaption className="sr-only">Fictional candidate and job posting</figcaption>
+        </figure>
       </section>
 
       <section className={styles.proof} aria-label="RoleSharp principles">
@@ -165,6 +172,11 @@ export function RoleSharpLanding() {
               <ArrowRight size={20} aria-hidden="true" />
             </Link>
           ))}
+        </div>
+        <div className="mt-4 text-center">
+          <Link className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-primary)] hover:underline" href="/tools#catalogue">
+            Browse all career tools <ArrowRight size={15} aria-hidden="true" />
+          </Link>
         </div>
       </section>
 

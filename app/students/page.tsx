@@ -98,7 +98,7 @@ export default function StudentsPage() {
         <Container className="relative z-10 py-16 md:py-24">
           <Badge variant="primary" className="mb-4">Student offer</Badge>
           <h1 className="text-4xl md:text-5xl font-extrabold text-[var(--color-text)] dark:text-[var(--color-dark-text)] mb-6 max-w-3xl">
-            Six months of Student Premium
+            Studying or active university student?
           </h1>
           <p className="text-lg md:text-xl text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-muted)] max-w-2xl leading-relaxed mb-8">
             When enrollment is open, verify your university email to get{" "}

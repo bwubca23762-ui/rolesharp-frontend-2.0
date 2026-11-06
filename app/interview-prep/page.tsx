@@ -23,7 +23,7 @@ const FAQS: [string, string][] = [
 
 export default function InterviewPrepPage() {
   return (
-    <ToolShell eyebrow="Interview practice" title="Practise with your resume" subtitle="Rehearse answers based on your own experience. One five-question typed session each month is free." actions={<Button as="a" href="/interview-questions" variant="outline">Question bank</Button>}>
+    <ToolShell eyebrow="Interview practice" title="Get your practice questions" subtitle="Rehearse answers based on your own experience. One five-question typed session each month is free." actions={<Button as="a" href="/interview-questions" variant="outline">Question bank</Button>}>
       <JsonLd data={breadcrumbLd([{ name: "Home", item: `${env.siteUrl}/` }, { name: "Interview Practice", item: `${env.siteUrl}/interview-prep` }])} />
       <JsonLd data={{ "@context": "https://schema.org", "@type": "WebApplication", name: "RoleSharp Interview Practice", applicationCategory: "BusinessApplication", operatingSystem: "Web", url: `${env.siteUrl}/interview-prep`, offers: { "@type": "Offer", price: "0", priceCurrency: "USD", description: "One five-question typed practice session per month; paid upgrades available" } }} />
       <FaqSection faqs={FAQS} visible={false} />

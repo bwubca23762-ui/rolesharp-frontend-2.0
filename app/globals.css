@@ -1108,6 +1108,10 @@ html[data-smarttopbar-off] aside[aria-label="Announcements and special offers"] 
   color: var(--color-primary);
 }
 
+[data-theme="dark"] .rs-nav-brand > span:last-child > span {
+  color: #5B9BFF;
+}
+
 .rs-nav-brand-mark {
   position: relative;
   display: block;

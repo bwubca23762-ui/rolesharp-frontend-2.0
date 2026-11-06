@@ -73,7 +73,7 @@ export default function ResumeTemplatesPage() {
         <Container className="py-8 md:py-12">
             <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Resume Templates" }]} />
             <h1 className="mt-3 text-[clamp(2rem,4vw,3rem)] font-bold! leading-tight! tracking-tight!">
-              Choose a resume layout
+              Choose the document your work deserves.
             </h1>
             <p className="mt-4 text-base md:text-lg leading-relaxed text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-muted)] max-w-2xl">
               Six focused starting styles for different careers and markets. Preview every design, switch without

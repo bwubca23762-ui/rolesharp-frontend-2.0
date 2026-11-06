@@ -153,7 +153,7 @@ export default function AdminSidebar({
 
   return (
     <>
-      <header className="admin-mobile-topbar">
+      <header className="admin-mobile-topbar lg:hidden">
         <button type="button" ref={menuRef} className="admin-mobile-menu" onClick={() => setMobileOpen(true)} aria-label="Open admin navigation" aria-expanded={mobileOpen} aria-controls="admin-navigation">
           <Menu size={21} />
         </button>

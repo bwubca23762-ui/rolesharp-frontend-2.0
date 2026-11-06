@@ -18,7 +18,6 @@ import {
   findNavigationGroup,
   groupRoutes,
   isNavigationRouteActive,
-  isOperationalWorkspacePath,
   routesForAudience,
 } from "./navigation-registry";
 import type { NavigationGroup, NavigationGroupId, NavigationRoute } from "./navigation-registry";
@@ -39,11 +38,6 @@ export default function Nav() {
     setOpen(false);
     setMenuOpen(null);
   };
-  // Desktop workspace pages already have a purpose-built side rail. Keeping
-  // the full marketing navigation above it duplicates choices and forces the
-  // account workspace below the fold. Mobile keeps this header because the
-  // rail is intentionally desktop-only there.
-  const workspaceDesktopNav = loggedIn && isOperationalWorkspacePath(pathname);
 
   useEffect(() => {
     setOpen(false);
@@ -367,7 +361,7 @@ export default function Nav() {
     : workspaceGroupRaw;
 
   return (
-    <nav className={`rs-site-nav sticky top-0 z-50${workspaceDesktopNav ? " lg:hidden" : ""}`} aria-label="Main navigation">
+    <nav className="rs-site-nav sticky top-0 z-50" aria-label="Main navigation">
       <div className="rs-nav-container max-w-[var(--maxw)] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rs-nav-shell" ref={menuRef}>
           <a href={loggedIn ? "/dashboard" : "/"} className="rs-nav-brand" aria-label={loggedIn ? "RoleSharp dashboard" : "RoleSharp home"}><span className="rs-nav-brand-mark" aria-hidden="true"><RoleSharpMark size={30} /></span><span>Role<span>Sharp</span></span></a>

@@ -781,7 +781,7 @@ export default function Tracker() {
                   <p className="mt-2 break-all text-sm text-[var(--color-text-muted)]">{attempt.provider} → {attempt.recipient_record.email}</p>
                   <p className="mt-2 text-xs text-[var(--color-text-muted)]">Immutable package {attempt.package_id}</p>
                   {attempt.status === "provider_accepted" && <p className="mt-2 text-sm font-semibold">Application email accepted by provider — delivery unverified</p>}
-                  {attempt.status === "unknown" && <p className="mt-2 text-sm font-semibold text-amber-800">Outcome unknown. Automatic resend is disabled.</p>}
+                  {attempt.status === "unknown" && <p className="mt-2 text-sm font-semibold text-amber-800 dark:text-amber-300">Outcome unknown. Automatic resend is disabled.</p>}
                   <a className="mt-2 inline-block text-sm font-bold text-[var(--color-primary)]" href={attempt.source_url}>Official application link</a>
                 </Card>
               ))}

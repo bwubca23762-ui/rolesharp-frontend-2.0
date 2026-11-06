@@ -90,7 +90,7 @@ export default function AdminLogin({ onOk }: { onOk: () => void }) {
             <p>Use this for audited recovery with a staff password and authenticator.</p>
             <div>
               <Label htmlFor="admin-user">Username</Label>
-              <Input id="admin-user" value={user} onChange={(e) => setUser(e.target.value)} autoComplete="username" required />
+              <Input id="admin-user" value={user} onChange={(e) => setUser(e.target.value)} autoComplete="username" />
             </div>
             <div>
               <div className="admin-password-label">

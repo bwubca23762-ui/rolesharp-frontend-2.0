@@ -179,7 +179,7 @@ export default function Dashboard() {
 
   return (
     <WorkspaceShell
-      title="Your job search at a glance"
+      title="My workspace"
       description="Pick up where you left off with your resumes and applications."
       actions={<Button as="a" href="/build">New resume</Button>}
       meta={workspaceMeta}

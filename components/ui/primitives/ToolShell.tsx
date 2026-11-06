@@ -45,7 +45,7 @@ export function ToolShell({
         <Container size="large" className="py-6 md:py-9">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <header className="min-w-0 max-w-2xl">
-              <h1 className="text-[clamp(2rem,4vw,3rem)] font-bold! leading-[1.1]! tracking-[-0.035em]! text-[var(--fg)] text-balance">{title}</h1>
+              <h1 className="text-[clamp(1.75rem,2.6vw,2.1rem)] font-bold! leading-[1.1]! tracking-[-0.035em]! text-[var(--fg)] text-balance">{title}</h1>
               <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-fg)]">{subtitle}</p>
               <span className="sr-only">{eyebrow}</span>
             </header>
