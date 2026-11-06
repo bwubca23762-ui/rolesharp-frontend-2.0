@@ -24,6 +24,7 @@ const config = [
       // the main checkout those are just more generated output: linting them
       // produced 14,032 phantom problems, none of them in authored source.
       ".claude/**",
+      ".agents/**",
       "bin/**",
       "audits/**",
       "tsconfig.jobs-qa.json",

@@ -172,32 +172,37 @@
   .desk-quote-stage[data-state="static"] .desk-quote-question,
   .desk-quote-stage[data-state="static"] .desk-quote-beat,
   .desk-quote-stage[data-state="static"] .desk-quote-answer { visibility: hidden; }
+  .desk-quote-stage[data-state="static"] .desk-quote-invitation { visibility: visible; opacity: 1; }
   .desk-quote-stage[data-state="playing"] .desk-quote-question {
     visibility: visible;
-    animation: desk-quote-out 280ms ease-in 1880ms both;
+    animation: desk-quote-out 300ms ease-in 1900ms both;
   }
   .desk-quote-stage[data-state="playing"] .desk-quote-question .desk-quote-mask > span {
     animation: desk-quote-rise 480ms cubic-bezier(.16, 1, .3, 1) both;
-    animation-delay: calc(var(--quote-word) * 53ms);
+    animation-delay: calc(var(--quote-word) * 50ms);
   }
   .desk-quote-stage[data-state="playing"] .desk-quote-beat {
     visibility: visible;
-    animation: desk-quote-rise 320ms cubic-bezier(.16, 1, .3, 1) 2110ms both,
-      desk-quote-out 210ms ease-in 2970ms forwards;
+    animation: desk-quote-rise 320ms cubic-bezier(.16, 1, .3, 1) 1980ms both,
+      desk-quote-out 260ms ease-in 2850ms forwards;
   }
   .desk-quote-stage[data-state="playing"] .desk-quote-beat > span {
-    animation: desk-quote-punctuation 360ms ease 2460ms 2 both;
+    animation: desk-quote-punctuation 360ms ease 2300ms 2 both;
+  }
+  .desk-quote-stage[data-state="playing"] .desk-quote-answer {
+    visibility: visible;
+    animation: desk-quote-out 320ms ease-in 4200ms forwards;
   }
   .desk-quote-stage[data-state="playing"] .desk-quote-answer .desk-quote-mask > span {
     animation: desk-quote-rise 480ms cubic-bezier(.16, 1, .3, 1) both;
-    animation-delay: calc(3280ms + var(--quote-word) * 62ms);
+    animation-delay: calc(2950ms + var(--quote-word) * 58ms);
   }
-  .desk-quote-stage[data-state="playing"] .desk-quote-answer {
-    animation: desk-quote-out 300ms ease-in 4400ms forwards;
+  .desk-quote-stage[data-state="playing"] .desk-quote-invitation {
+    visibility: visible;
   }
   .desk-quote-stage[data-state="playing"] .desk-quote-invitation .desk-quote-mask > span {
-    animation: desk-quote-rise 480ms cubic-bezier(.16, 1, .3, 1) both;
-    animation-delay: calc(4800ms + var(--quote-word) * 64ms);
+    animation: desk-quote-rise 500ms cubic-bezier(.16, 1, .3, 1) both;
+    animation-delay: calc(4350ms + var(--quote-word) * 60ms);
   }
 }
 @keyframes desk-quote-rise {

@@ -95,7 +95,7 @@ export default function TemplateCatalog() {
 
       <div className="desk-template-layout">
         <figure className="desk-template-stage">
-          <Image src={`/templates/${selected.engineId}.webp`} alt={`Sample resume in the ${selected.name} template`} width={460} height={650} sizes="(max-width: 767px) 85vw, 460px" />
+          <Image src={`/templates/${selected.engineId}.webp`} alt={`Sample resume in the ${selected.name} template`} width={460} height={650} sizes="(max-width: 767px) 85vw, 460px" priority />
           <figcaption><SampleProvenance status="fictional" detail="This example shows the layout." className="mt-3 justify-center" /></figcaption>
         </figure>
         <div className="min-w-0 py-4 md:py-8">

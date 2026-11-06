@@ -958,7 +958,7 @@ export default function Build() {
         const profileDone = !!name.trim() && !!(email.trim() || phone.trim()) && !!city.trim();
         const targetDone = !!roleQ.trim();
         const evidenceDone = hasSkills && (parseEducation(edu).length > 0 || expEntries.length > 0 || parseProjects(projects).length > 0);
-        const stepCurrent = !profileDone ? 0 : !targetDone ? 1 : !evidenceDone ? 2 : out ? 4 : 3;
+        const stepCurrent = out ? 4 : reviewRequest ? 3 : !profileDone ? 0 : !targetDone ? 1 : !evidenceDone ? 2 : 2;
         // Scroll to a section. This used to also fire a "Draft saved" toast on
         // every click, unconditionally — the draft is autosaved on a debounce by
         // useLocalDraft whether or not anything was touched, so the toast
@@ -966,18 +966,41 @@ export default function Build() {
         // claimed a save had happened even when nothing had changed. Draft state
         // is already reported by draftStatus; navigation should not announce it.
         const jump = (i: number) => {
+          if (i === 3 && !reviewRequest) {
+            reviewDetails();
+            return;
+          }
+          if (reviewRequest && i < 3) {
+            setReviewRequest(null);
+          }
           const id = ["step-profile", "step-target", "step-evidence", "step-generate", "step-export"][i];
-          const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          const reduceMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
           document.getElementById(id)?.scrollIntoView({ behavior: reduceMotion ? "instant" : "smooth", block: "start" });
         };
         return (
           <div className="build-steps">
-            <StepProgress steps={["Profile", "Target job", "Evidence", "Generate", "Export"]} current={stepCurrent} onJump={jump} />
+            <StepProgress steps={["Profile", "Target job", "Evidence", "Review & Confirm", "Export"]} current={stepCurrent} onJump={jump} />
           </div>
         );
       })()}
 
-      <div className="build-grid" onChangeCapture={markWorkspaceEdited}>
+      {countryConfirmed && reviewRequest ? (
+        <GenerationReview
+          request={reviewRequest}
+          company={company?.name || companyQ.trim()}
+          role={roleSel?.title || roleQ.trim()}
+          onEdit={editReviewedSection}
+          onBack={() => {
+            setReviewRequest(null);
+            const reduce = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+            window.scrollTo({ top: 120, behavior: reduce ? "auto" : "smooth" });
+          }}
+          onConfirm={generate}
+          busy={busy}
+          err={err}
+        />
+      ) : countryConfirmed && (
+        <div className="build-grid" onChangeCapture={markWorkspaceEdited}>
         <section className="card builder-panel">
           <div className="section-title" id="step-profile"><User size={18} /><h2>Profile</h2></div>
           {sectionErrors.profile && <p id="build-error-profile" className="err" role="alert">{sectionErrors.profile}</p>}
@@ -1248,17 +1271,18 @@ export default function Build() {
         </aside>
 
       </div>
+      )}
 
       {/* Spec §3.3: the generate action sticks to the viewport bottom on
           mobile — the form is long and the one button that matters must not
           require a scroll hunt. Hidden ≥lg (the two-column workbench keeps
           the in-flow button in view) and while the first-visit cookie notice
           owns the bottom slot (§3.10); the spacer keeps the footer readable. */}
-      {!consentPending && (
+      {!consentPending && !reviewRequest && (
         <>
           <div aria-hidden="true" className="h-[4.25rem] lg:hidden" />
           <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--color-border)] bg-[var(--color-surface)]/95 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur-sm lg:hidden dark:border-[var(--color-dark-border)] dark:bg-[var(--color-dark-surface)]/95">
-            <Button fullWidth onClick={generate} disabled={busy} isLoading={busy}>Generate resume</Button>
+            <Button fullWidth onClick={reviewDetails} disabled={busy} isLoading={busy}>Review details</Button>
           </div>
         </>
       )}
@@ -1326,16 +1350,6 @@ export default function Build() {
       </div>
 
       <FaqSection heading="Resume builder — common questions" faqs={BUILD_FAQS} />
-      {reviewRequest && (
-        <GenerationReview
-          request={reviewRequest}
-          company={company?.name || companyQ.trim()}
-          role={roleSel?.title || roleQ.trim()}
-          onEdit={editReviewedSection}
-          onClose={() => setReviewRequest(null)}
-          onConfirm={generate}
-        />
-      )}
       {confirmClear && (
         <ConfirmDialog
           title="Clear the whole form?"

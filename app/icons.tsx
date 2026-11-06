@@ -49,6 +49,7 @@ export const Copy = (p: IconProps) => <svg {...S(p)}><rect width="14" height="14
 export const Trash = (p: IconProps) => <svg {...S(p)}><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M10 11v6M14 11v6" /></svg>;
 export const Grip = (p: IconProps) => <svg {...S(p)}><circle cx="9" cy="6" r="1" /><circle cx="15" cy="6" r="1" /><circle cx="9" cy="12" r="1" /><circle cx="15" cy="12" r="1" /><circle cx="9" cy="18" r="1" /><circle cx="15" cy="18" r="1" /></svg>;
 export const ChevronDown = (p: IconProps) => <svg {...S(p)}><path d="m6 9 6 6 6-6" /></svg>;
+export const ChevronUp = (p: IconProps) => <svg {...S(p)}><path d="m18 15-6-6-6 6" /></svg>;
 export const Info = (p: IconProps) => <svg {...S(p)}><circle cx="12" cy="12" r="9" /><path d="M12 16v-4M12 8h.01" /></svg>;
 export const AlertTriangle = (p: IconProps) => <svg {...S(p)}><path d="M10.3 3.6 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0Z" /><path d="M12 9v4M12 17h.01" /></svg>;
 export const Upload = (p: IconProps) => <svg {...S(p)}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 9l5-5 5 5M12 4v12" /></svg>;

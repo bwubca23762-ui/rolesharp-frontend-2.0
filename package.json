@@ -22,6 +22,8 @@
     "typecheck": "tsc --noEmit --incremental false",
     "check": "npm run typecheck && npm run lint",
     "test:security": "node --import tsx --test tests/security-remediation.test.ts",
+    "fixtures:seed": "tsx scripts/local-review-fixtures.ts seed",
+    "fixtures:reset": "tsx scripts/local-review-fixtures.ts reset",
     "test:frontend": "node --import tsx --test tests/frontend-regression.test.ts",
     "test:ats": "node --import tsx --test tests/ats-premium.test.ts",
     "test:seo": "node --import tsx --test tests/seo-structured-data.test.ts",

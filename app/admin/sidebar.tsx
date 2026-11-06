@@ -127,10 +127,11 @@ export default function AdminSidebar({
       }
     };
     document.addEventListener("keydown", onKey);
+    const trigger = menuRef.current;
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", onKey);
-      menuRef.current?.focus();
+      trigger?.focus();
     };
   }, [mobileOpen]);
 

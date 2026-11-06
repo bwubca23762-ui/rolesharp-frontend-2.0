@@ -2,7 +2,9 @@
 
 Included:
 
-- `rolesharp_design_foundations.pdf`
-- `rolesharp_landing_desktop.pdf`
+- `rolesharp_design_foundations.pdf` — RoleSharp 2.0 system foundations, color tokens, and editorial typography
+- `rolesharp_landing_desktop.pdf` — Desktop hero, 7-act marketing workflow, and evidence review stage
+- `rolesharp_builder_review_spec.pdf` — Builder specification with multi-skill discrete rows, keyboard management, and modal pre-generation review gate
+- `rolesharp_builder_review_spec.png` — High-resolution 2x visual render of the builder specification
 
-These PDFs were exported from the connected **Untitled** Figma design document through the Figma MCP bridge. The bridge cannot generate or download a portable `.fig` source file. Save the original Figma document to a shared Figma project to access its editable source from another device.
+These assets were handcrafted and exported directly from the live Figma document via the Figma MCP Bridge.

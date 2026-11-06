@@ -3214,3 +3214,40 @@ test("announcement rails stay slim theme-following rule-lines, not colored slabs
   const promoClient = source("app/promo-banner-client.tsx");
   assert.match(promoClient, /RETURN_AFTER_DAYS = 7/);
 });
+
+test("RoleSharp 2.0 multi-skill UX, review-step contracts, and payload shape", () => {
+  const skillFields = source("app/build/skill-fields.tsx");
+  const reviewStep = source("app/build/generation-review.tsx");
+  const buildPage = source("app/build/page.tsx");
+  const typesSource = source("lib/types.ts");
+
+  // 1. SkillFields contracts: discrete rows, Enter/keyboard add, duplicate detection, reorder & remove
+  assert.match(skillFields, /\+ Add another skill/);
+  assert.match(skillFields, /Duplicate .* detected/);
+  assert.match(skillFields, /Move skill \$\{index \+ 1\} up/);
+  assert.match(skillFields, /Move skill \$\{index \+ 1\} down/);
+  assert.match(skillFields, /Remove skill \$\{index \+ 1\}/);
+  assert.match(skillFields, /event\.key === "Enter"/);
+  assert.match(skillFields, /event\.key === "ArrowDown"/);
+  assert.match(skillFields, /event\.key === "ArrowUp"/);
+  assert.match(skillFields, /event\.key === "Backspace"/);
+
+  // 2. ReviewStep contracts: dedicated in-flow step, exact safety principle, explicit CTA
+  assert.match(reviewStep, /id="step-review-confirm"/);
+  assert.match(
+    reviewStep,
+    /Only details you provide are used\. Review them before generating\./,
+  );
+  assert.match(reviewStep, /Confirm & generate resume/);
+  assert.match(reviewStep, /← Back to edit form/);
+  assert.match(reviewStep, /Edit section/);
+
+  // 3. Builder page wiring & StepProgress
+  assert.match(buildPage, /steps=\{.*"Review & Confirm".*\}/);
+  assert.match(buildPage, /skills\.map\(\(skill\) => skill\.trim\(\)\)\.filter\(Boolean\)/);
+  assert.match(buildPage, /<GenerationReview/);
+
+  // 4. Backend schema: ProfileSchema enforces array of strings for skills
+  assert.match(typesSource, /skills:\s*z\.array\(z\.string\(\)\)\.default\(\[\]\)/);
+});
+
