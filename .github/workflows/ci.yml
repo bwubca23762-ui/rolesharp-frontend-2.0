@@ -50,6 +50,7 @@ jobs:
       ROUTE_AUDIT_TIMEOUT_MS: "30000"
       AUTH_SECRET: ci-only-not-used-in-production
       ADMIN_TOTP_SECRET: JBSWY3DPEHPK3PXP
+      RAZORPAY_WEBHOOK_SECRET: ci-only-not-used-in-production
 
     steps:
       - uses: actions/checkout@v4

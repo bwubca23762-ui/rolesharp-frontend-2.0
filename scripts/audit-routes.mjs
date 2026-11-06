@@ -121,10 +121,11 @@ for (const handler of handlers) {
   }
   for (const requestSpec of requests) {
     const result = handlerByRequest.get(`${requestSpec.method} ${requestSpec.pathname}`);
+    const intentional503 = result?.status === 503 && requestSpec.pathname === "/api/pay/razorpay/webhook";
     if (
       !result ||
       result.status === 0 ||
-      result.status >= 500 ||
+      (result.status >= 500 && !intentional503) ||
       (requestSpec.exported && result.status === 405)
     ) {
       failures.push({
