@@ -471,6 +471,9 @@
   box-shadow: 0 8px 24px rgb(15, 23, 42, 0.35);
   transition: transform var(--transition), box-shadow var(--transition);
 }
+[data-theme="dark"] .preview-fab {
+  color: #070b16;
+}
 .preview-fab:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 32px rgb(15, 23, 42, 0.4);

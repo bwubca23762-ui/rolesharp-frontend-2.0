@@ -49,7 +49,7 @@ export default function LearnPage() {
             description="Follow six free modules from revising your resume to preparing for interviews. Start with the module you need."
             actions={
               <>
-                <Button as="a" href="#module-1" size="lg">Browse modules</Button>
+                <Button as="a" href="#module-1" size="lg">Start Module 1 — Fix</Button>
                 <Button as="a" href="/prompts" variant="outline" size="lg">See the AI prompts</Button>
               </>
             }

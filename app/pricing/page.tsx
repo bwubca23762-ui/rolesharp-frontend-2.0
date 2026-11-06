@@ -133,7 +133,7 @@ export default function PricingPage() {
           </div>
           <section id="student-access" className="mt-9 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-6">
             <div>
-              <h2 className="text-xl!">Student Premium</h2>
+              <h2 className="text-xl!">Studying or active university student?</h2>
               <p className="mt-1 text-[var(--muted-fg)]">{env.studentOfferEnabled ? "Check your eligibility for free Student Premium." : "New Student Premium enrollments are currently paused."}</p>
             </div>
             <Button as="a" href="/students" variant="outline">View student access</Button>

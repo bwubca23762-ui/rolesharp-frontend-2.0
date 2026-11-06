@@ -257,7 +257,7 @@ export default function GenerationReview({
           icon={<Sparkles size={16} aria-hidden="true" />}
           onEdit={() => onEdit("evidence")}
           badge={`${validSkills.length} skills`}
-          editAriaLabel="Edit skills"
+          editAriaLabel="Edit resume evidence"
         >
           {validSkills.length > 0 ? (
             <div className="flex flex-wrap gap-2 pt-1">
