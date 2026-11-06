@@ -4,7 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { KEY_LOCALES } from "@/lib/locales";
 import { Globe } from "./icons";
 
-export default function LanguagePicker({ pathname, onOpen }: { pathname: string; onOpen: () => void }) {
+export default function LanguagePicker({ pathname, onOpen }: { pathname: string; onOpen?: () => void }) {
   const id = useId();
   const root = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -41,7 +41,7 @@ export default function LanguagePicker({ pathname, onOpen }: { pathname: string;
         aria-expanded={open}
         aria-controls={open ? id : undefined}
         onClick={() => {
-          if (!open) onOpen();
+          if (!open) onOpen?.();
           setOpen(!open);
         }}
       >

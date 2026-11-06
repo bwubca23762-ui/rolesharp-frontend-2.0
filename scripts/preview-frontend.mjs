@@ -1,12 +1,20 @@
 import { execFileSync, spawn } from "node:child_process";
 import { randomBytes, scryptSync } from "node:crypto";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createRequire } from "node:module";
+import { createServer } from "node:net";
 
 const origin = "http://127.0.0.1:34110";
-const pgPort = "55410";
+const pgPort = await new Promise((resolve, reject) => {
+  const probe = createServer();
+  probe.once("error", reject);
+  probe.listen(0, "127.0.0.1", () => {
+    const { port } = probe.address();
+    probe.close((error) => error ? reject(error) : resolve(String(port)));
+  });
+});
 const brewPostgres = ["/opt/homebrew", "/usr/local"]
   .map((prefix) => join(prefix, "opt", "postgresql@17", "bin"))
   .find((bin) => existsSync(join(bin, "pg_ctl")));
@@ -24,11 +32,13 @@ const demoHash = `${salt}:${scryptSync(demoPassword, salt, 64).toString("hex")}`
 const root = mkdtempSync(join(tmpdir(), "rolesharp-review-"));
 const cluster = join(root, "db");
 const passwordFile = join(root, "password");
-const pgEnv = { PATH: process.env.PATH, LANG: "C", PGPASSWORD: dbPassword };
+const postgresLog = join(root, "postgres.log");
+const pgEnv = { ...process.env, LANG: "C", PGPASSWORD: dbPassword };
 
-function postgres(command, args) {
+function postgres(command, args, options = {}) {
   try {
-    execFileSync(join(pgBin, command), args, { env: pgEnv, stdio: ["ignore", "pipe", "pipe"] });
+    const stdio = options.stdio ?? (command === "pg_ctl" && args.includes("start") && process.platform === "win32" ? "ignore" : ["ignore", "pipe", "pipe"]);
+    execFileSync(join(pgBin, command), args, { env: pgEnv, stdio });
   } catch (error) {
     throw new Error(`${command} failed: ${error.stderr?.toString().trim() || error.code}`);
   }
@@ -38,7 +48,13 @@ let databaseStarted = false;
 try {
   writeFileSync(passwordFile, dbPassword, { mode: 0o600 });
   postgres("initdb", ["-D", cluster, "-A", "scram-sha-256", "-U", dbUser, "--pwfile", passwordFile]);
-  postgres("pg_ctl", ["-D", cluster, "-l", join(root, "postgres.log"), "-o", `-h 127.0.0.1 -p ${pgPort} -k ${root}`, "start"]);
+  try {
+    const socketOptions = process.platform === "win32" ? "" : " -c unix_socket_directories=''";
+    postgres("pg_ctl", ["-D", cluster, "-l", postgresLog, "-o", `-h 127.0.0.1 -p ${pgPort}${socketOptions}`, "start"]);
+  } catch (error) {
+    if (existsSync(postgresLog)) console.error(readFileSync(postgresLog, "utf8"));
+    throw error;
+  }
   databaseStarted = true;
 
   const psql = ["-X", "-h", "127.0.0.1", "-p", pgPort, "-U", dbUser, "-d", "postgres", "-v", "ON_ERROR_STOP=1"];
@@ -61,7 +77,7 @@ try {
     stdio: "inherit",
     env: {
       PATH: process.env.PATH,
-      HOME: process.env.HOME,
+      HOME: process.env.HOME || process.env.USERPROFILE,
       NODE_ENV: "development",
       AUTH_SECRET: randomBytes(32).toString("hex"),
       SITE_URL: origin,
@@ -76,8 +92,12 @@ try {
       LOCAL_DEV_MODE: "false",
       DISABLE_DB: "false",
       DATABASE_URL: databaseUrl,
-      REDIS_URL: "",
+      REDIS_URL: "redis://127.0.0.1:1",
       GOOGLE_CLIENT_ID: "",
+      OPENAI_API_KEY: "",
+      ANTHROPIC_PROXY_URL: "",
+      RAZORPAY_KEY_ID: "",
+      RAZORPAY_KEY_SECRET: "",
       SMTP_HOST: "",
       GCP_VOICE_ENABLED: "false",
       JOBS_QA_DIST_DIR: ".next-frontend-review",

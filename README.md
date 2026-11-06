@@ -31,3 +31,11 @@ filename is historical evidence, not current guidance.
 - [Microsoft app registration](docs/MICROSOFT-MAILBOX-REGISTRATION.md)
 - [Operations and incident response](docs/JOBS-WORKFLOWS-RUNBOOK.md)
 - [Rollback and reconciliation](docs/JOBS-WORKFLOWS-ROLLBACK.md)
+
+## Local Frontend 2.0 review
+
+Install dependencies with `npm ci` and ensure PostgreSQL 17 tools are available (set `PG_BIN` to the directory containing `initdb`, `pg_ctl` and `psql` if needed). Run `npm run preview:frontend` and open `http://127.0.0.1:34110/dev/frontend-review`.
+
+Use **Demo sign-in** and the fictional credentials printed by the launcher. The prototype layouts link to the working checker, resume builder, dashboard, jobs, templates and tracker. The local server creates a disposable, seeded PostgreSQL database. Resume generation uses the built-in local tailor and saves results to that database. Restarting the launcher resets the sample workspace.
+
+The preview binds to loopback. Live integrations such as mail, payment, and job submission are outside this demo.

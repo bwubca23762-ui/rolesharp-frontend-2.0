@@ -150,12 +150,12 @@
 
   /* Dark surfaces — deep navy with readable cool-white type. */
   --color-dark-bg: #061426;
-  --color-dark-surface: #0B1D34;
+  --color-dark-surface: #0C213A;
   --color-dark-surface-2: #112943;
-  --color-dark-border: #294361;
-  --color-dark-text: #F4F7FB;
-  --color-dark-text-muted: #B2C0D1;
-  --color-dark-text-faint: #B2C0D1;
+  --color-dark-border: #26415F;
+  --color-dark-text: #EFF5FF;
+  --color-dark-text-muted: #A9BAD1;
+  --color-dark-text-faint: #A9BAD1;
 
   /* Admin console (shadcn/ui surface) — slate palette, namespaced --color-admin-*
      so it can never clobber the public-site --color-primary/--color-border/
@@ -2115,27 +2115,22 @@ html[data-smarttopbar-off] aside[aria-label="Announcements and special offers"] 
   --color-accent-hover: #F6C75B;
   --color-navy: #061426;
   --color-bg: #061426;
-  --color-surface: #0B1D34;
+  --color-surface: var(--color-dark-surface);
   --color-surface-2: #112943;
   --color-surface-3: #173552;
-  --color-border: #294361;
-  --color-text: #F4F7FB;
-  --color-text-muted: #B2C0D1;
+  --color-border: var(--color-dark-border);
+  --color-text: var(--color-dark-text);
+  --color-text-muted: var(--color-dark-text-muted);
   --color-text-faint: #91A4BA;
   --color-dark-bg: #061426;
-  --color-dark-surface: #0B1D34;
-  --color-dark-surface-2: #112943;
-  --color-dark-border: #294361;
-  --color-dark-text: #F4F7FB;
-  --color-dark-text-muted: #B2C0D1;
   --bg: #061426;
-  --fg: #F4F7FB;
-  --surface: #0B1D34;
+  --fg: var(--color-dark-text);
+  --surface: var(--color-dark-surface);
   --surface-2: #112943;
   --surface-offset: #173552;
   --muted-bg: #112943;
-  --muted-fg: #B2C0D1;
-  --border: #294361;
+  --muted-fg: var(--color-dark-text-muted);
+  --border: var(--color-dark-border);
   --navy: #061426;
   /* Lifted to the ink-action blue: #2F6FBD as text on the dark surfaces above
      is ~3.3:1 (axe color-contrast on the landing's tool tags). Solid primary
@@ -2160,7 +2155,7 @@ html[data-smarttopbar-off] aside[aria-label="Announcements and special offers"] 
     linear-gradient(rgb(30 41 59 / 0.18) 1px, transparent 1px),
     linear-gradient(90deg, rgb(30 41 59 / 0.18) 1px, transparent 1px);
   background-size: auto, 52px 52px, 52px 52px;
-  color: #f1f5f9;
+  color: var(--fg);
 }
 
 [data-theme="dark"] #page-content {
