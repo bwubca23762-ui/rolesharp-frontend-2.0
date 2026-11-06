@@ -33,11 +33,12 @@ const root = mkdtempSync(join(tmpdir(), "rolesharp-review-"));
 const cluster = join(root, "db");
 const passwordFile = join(root, "password");
 const postgresLog = join(root, "postgres.log");
-const pgEnv = { PATH: process.env.PATH, LANG: "C", PGPASSWORD: dbPassword };
+const pgEnv = { ...process.env, LANG: "C", PGPASSWORD: dbPassword };
 
-function postgres(command, args) {
+function postgres(command, args, options = {}) {
   try {
-    execFileSync(join(pgBin, command), args, { env: pgEnv, stdio: ["ignore", "pipe", "pipe"] });
+    const stdio = options.stdio ?? (command === "pg_ctl" && args.includes("start") && process.platform === "win32" ? "ignore" : ["ignore", "pipe", "pipe"]);
+    execFileSync(join(pgBin, command), args, { env: pgEnv, stdio });
   } catch (error) {
     throw new Error(`${command} failed: ${error.stderr?.toString().trim() || error.code}`);
   }
@@ -76,7 +77,7 @@ try {
     stdio: "inherit",
     env: {
       PATH: process.env.PATH,
-      HOME: process.env.HOME,
+      HOME: process.env.HOME || process.env.USERPROFILE,
       NODE_ENV: "development",
       AUTH_SECRET: randomBytes(32).toString("hex"),
       SITE_URL: origin,
