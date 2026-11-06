@@ -1,7 +1,7 @@
 begin;
 
-insert into users (id, email, password_hash, email_verified_at, created_at)
-values ('00000000-0000-4000-8000-000000000001', :'demo_email', :'demo_hash', now(), '2024-01-01')
+insert into users (id, email, password_hash, email_verified_at, created_at, premium_until, premium_source)
+values ('00000000-0000-4000-8000-000000000001', :'demo_email', :'demo_hash', now(), '2024-01-01', now() + interval '30 days', 'paid')
 returning id as user_id \gset
 
 insert into countries (code, name, priority) values ('US', 'United States', 1);

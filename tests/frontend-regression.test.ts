@@ -4,6 +4,16 @@ import { readFileSync, readdirSync } from "node:fs";
 import { DEFAULT_AUTH_DESTINATION } from "../lib/auth-redirect";
 import { planLabel } from "../lib/plan-label";
 
+test("the redesign prototype reuses the landing interactions and live review flows", () => {
+  const prototype = source("app/dev/frontend-review/prototype-page.tsx");
+  assert.match(prototype, /<ThemeToggle compact/);
+  assert.match(prototype, /<LanguagePicker/);
+  assert.match(prototype, /<LandingQuote compact/);
+  assert.match(prototype, /\/login\?next=/);
+  assert.match(prototype, /href="\/tracker"/);
+  assert.match(source("app/dev/frontend-review/prototype.module.css"), /--ink:\s*var\(--fg\)/);
+});
+
 function walkSurfaces(): string[] {
   const roots = ["app", "components", "lib"];
   const found: string[] = [];
@@ -518,7 +528,7 @@ test("marketing typography stays within the responsive heading scale", () => {
   assert.match(hero, /leading-\[1\.0[0-9]\]!/);
   // Deep-blue palette: muted copy remains a dedicated high-contrast token in both themes.
   assert.match(globals, /--color-text-faint: #52647A/);
-  assert.match(globals, /--color-dark-text-faint: #B2C0D1/);
+  assert.match(globals, /--color-dark-text-faint: #A9BAD1/);
   assert.match(globals, /--color-brand-amber:/);
   assert.match(
     globals,

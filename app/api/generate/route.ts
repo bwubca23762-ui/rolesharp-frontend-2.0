@@ -3,7 +3,7 @@ import { createHash, randomUUID } from "crypto";
 import { GenerateRequest } from "@/lib/types";
 import { resumeQueue, admit } from "@/lib/queue";
 import { getRoleBySlug, getCompanyBySlug, matchRoleByText, searchRoles, searchCompanies, matchCompanyByText } from "@/lib/db";
-import { hasDb, q } from "@/lib/db";
+import { hasDb, q, saveResume } from "@/lib/db";
 import { currentUser } from "@/lib/auth";
 import { getEntitlement, releaseGenerationReservation, reserveGeneration } from "@/lib/entitlements";
 import { spendCredit } from "@/lib/credits";
@@ -118,6 +118,39 @@ if (!parsed.success) return NextResponse.json({ error: parsed.error.issues[0]?.m
     return NextResponse.json({ error: "limit_reached", limit: ent.limit, period: ent.period, premium: ent.premium, upgrade: !ent.premium }, { status: 402 });
   }
   const template = ent.premium ? data.template : "basic";
+
+  // The loopback preview seeds this account in its disposable database.
+  // Generate through the existing local tailor without a queue or AI service.
+  if (
+    process.env.NODE_ENV === "development" &&
+    process.env.FRONTEND_REVIEW_MODE === "true" &&
+    user.id === "00000000-0000-4000-8000-000000000001" &&
+    user.email === process.env.FRONTEND_REVIEW_EMAIL &&
+    env.siteUrl === "http://127.0.0.1:34110" &&
+    reqHttp.headers.get("host") === "127.0.0.1:34110"
+  ) {
+    const role = data.roleSlug ? await getRoleBySlug(data.roleSlug) : null;
+    const company = data.companySlug ? await getCompanyBySlug(data.companySlug) : null;
+    const companyName = company?.name ?? cleanName(data.companyNameRaw);
+    const result = localTailor(data, role, companyName, ent.premium);
+    const resumeId = randomUUID();
+    const saved = await saveResume({
+      id: resumeId,
+      userId: user.id,
+      name: data.profile.name,
+      content: result.content,
+      atsScore: result.atsScore,
+      template,
+      jdText: data.jdText,
+      roleId: role?.id,
+      companyId: company?.id,
+      genMs: 0,
+      model: "local-review",
+      premiumUnlock: ent.premium,
+    });
+    if (!saved) return NextResponse.json({ error: "Demo resume could not be saved" }, { status: 409 });
+    return NextResponse.json({ resumeId, ...result, premium: ent.premium, premiumUnlock: ent.premium });
+  }
 
   if (!env.localDevMode && !(await admit())) {
     return NextResponse.json({ error: "busy", retryAfter: 30 }, { status: 503, headers: { "Retry-After": "30" } });
