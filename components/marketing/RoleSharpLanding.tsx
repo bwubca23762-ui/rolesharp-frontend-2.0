@@ -88,23 +88,23 @@ export function RoleSharpLanding() {
           <aside className={styles.evidence}>
             <div>
               <Check size={16} aria-hidden="true" />
-              <h3>Supported by the resume</h3>
+              <h2>Supported by the resume</h2>
               <p>
                 The 12% lift is a concrete outcome the hiring team can evaluate.
               </p>
             </div>
             <div>
               <Search size={16} aria-hidden="true" />
-              <h3>Check before adding</h3>
+              <h2>Check before adding</h2>
               <p>
                 The role asks for pricing tests. This resume shows onboarding
                 tests.
               </p>
             </div>
-            <div className="desk-source mt-3 text-xs border-t border-[var(--hairline)] pt-2 text-[#1e293b]">
+            <dl className="desk-source mt-3 text-xs border-t border-[var(--hairline)] pt-2 text-[#1e293b]">
               <dt className="font-semibold text-[#0f172a]">Sample source</dt>
               <dd className="text-[#334155]">Onboarding release notes and experiment results</dd>
-            </div>
+            </dl>
           </aside>
           <figcaption className="sr-only">Fictional candidate and job posting</figcaption>
         </figure>

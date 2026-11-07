@@ -186,7 +186,7 @@ export function ModernPlans({
           <Reveal variant="rise" delay={80}>
             <div className="relative flex h-full flex-col justify-between rounded-2xl border-2 border-[var(--primary)] bg-[var(--surface)] p-7 shadow-xl transition-all duration-200 md:-translate-y-1 sm:p-8">
               <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--primary)] px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-white shadow-sm">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--primary)] px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-white dark:text-[#070b16] shadow-sm">
                   <Sparkles size={12} className="text-amber-300" aria-hidden="true" />
                   <span>Recommended for Job Search</span>
                 </span>

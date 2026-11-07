@@ -161,7 +161,7 @@ export default function AdminSidebar({
           <span>RoleSharp Admin</span>
           <small>{current?.label || "Overview"}</small>
         </div>
-        <span className="admin-mobile-environment">{status.environmentLabel}</span>
+        <span className="admin-mobile-environment">Env: {status.environmentLabel}</span>
       </header>
 
       {mobileOpen && <div className="admin-sidebar-backdrop" aria-hidden onClick={() => setMobileOpen(false)} />}

@@ -73,7 +73,7 @@ export default function ResumeTemplatesPage() {
         <Container className="py-8 md:py-12">
             <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Resume Templates" }]} />
             <h1 className="mt-3 text-[clamp(2rem,4vw,3rem)] font-bold! leading-tight! tracking-tight!">
-              Choose the document your work deserves.
+              Choose the document your work deserves. Start with the right structure.
             </h1>
             <p className="mt-4 text-base md:text-lg leading-relaxed text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-muted)] max-w-2xl">
               Six focused starting styles for different careers and markets. Preview every design, switch without
@@ -87,7 +87,7 @@ export default function ResumeTemplatesPage() {
         <Container>
           <div className="mb-8 reveal-on-scroll">
             <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-text)] dark:text-[var(--color-dark-text)] mb-3">
-              Compare the six layouts
+              Compare the six layouts — Preview first. Build when one feels right.
             </h2>
             <p className="max-w-2xl text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-muted)]">
               Filter by the kind of application you are making. Every option uses standard headings, a controlled reading order,

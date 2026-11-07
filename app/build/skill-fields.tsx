@@ -225,8 +225,9 @@ export default function SkillFields({
           className="font-medium"
           leftIcon={<Plus size={16} aria-hidden="true" />}
           onClick={() => addSkill()}
+          aria-label="Add skill"
         >
-          + Add another skill
+          Add skill
         </Button>
         <span className="text-xs text-[var(--muted-fg)] hidden sm:inline">
           Tip: Press <kbd className="rounded border border-[var(--border)] bg-[var(--surface-2)] px-1.5 py-0.5 text-[10px] font-mono">Enter</kbd> to add the next skill
