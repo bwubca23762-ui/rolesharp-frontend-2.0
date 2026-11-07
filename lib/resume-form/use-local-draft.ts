@@ -32,6 +32,8 @@ export function useLocalDraft<T>({ key, version, maxAgeMs, value, onRestore }: O
 } {
   const [status, setStatus] = useState<DraftStatus>("idle");
   const [ready, setReady] = useState(false);
+  const skipNextSave = useRef(false);
+  const lastSaved = useRef<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   // Held in a ref so a caller passing an inline closure does not re-run restore.
   const restore = useRef(onRestore);
@@ -46,6 +48,7 @@ export function useLocalDraft<T>({ key, version, maxAgeMs, value, onRestore }: O
         && Date.now() - savedAt <= maxAgeMs;
       if (parsed && !current) localStorage.removeItem(key);
       if (parsed && current) {
+        skipNextSave.current = true;
         restore.current(parsed);
         setStatus("restored");
       }
@@ -61,6 +64,12 @@ export function useLocalDraft<T>({ key, version, maxAgeMs, value, onRestore }: O
   const serialized = JSON.stringify(value);
   useEffect(() => {
     if (!ready) return;
+    if (skipNextSave.current) {
+      skipNextSave.current = false;
+      lastSaved.current = serialized;
+      return;
+    }
+    if (serialized === lastSaved.current) return;
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       try {
@@ -69,6 +78,7 @@ export function useLocalDraft<T>({ key, version, maxAgeMs, value, onRestore }: O
           version,
           savedAt: new Date().toISOString(),
         }));
+        lastSaved.current = serialized;
         setStatus("saved");
       } catch {
         setStatus("idle");
@@ -84,6 +94,7 @@ export function useLocalDraft<T>({ key, version, maxAgeMs, value, onRestore }: O
     clear: () => {
       if (timer.current) clearTimeout(timer.current);
       try { localStorage.removeItem(key); } catch {}
+      lastSaved.current = null;
       setStatus("idle");
     },
   };

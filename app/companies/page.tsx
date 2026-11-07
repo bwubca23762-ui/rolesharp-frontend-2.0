@@ -48,7 +48,7 @@ export default async function CompaniesIndex() {
 
       <Section asContainer={false} size="sm">
         <Container>
-          <h2 className="mb-4 text-2xl font-bold text-[var(--fg)]">Companies</h2>
+          <h2 className="mb-4 text-2xl font-bold text-[var(--fg)]">Top global employers</h2>
           <CompaniesPage companies={companies} />
           <nav aria-label="Resume tools" className="mt-5 flex flex-wrap gap-x-5 gap-y-3">
             <a href="/resume-builder" className="reading-text-link">Build a company-tailored resume</a>

@@ -101,9 +101,9 @@ export function RoleSharpLanding() {
                 tests.
               </p>
             </div>
-            <dl className="desk-source mt-3 text-xs border-t border-[var(--hairline)] pt-2 text-[#1e293b]">
-              <dt className="font-semibold text-[#0f172a]">Sample source</dt>
-              <dd className="text-[#334155]">Onboarding release notes and experiment results</dd>
+            <dl className="desk-source mt-3 text-xs border-t border-[var(--hairline)] pt-2 text-[#cbd5e1]">
+              <dt className="font-semibold text-[#f1f5f9]">Sample source</dt>
+              <dd className="text-[#cbd5e1]">Onboarding release notes and experiment results</dd>
             </dl>
           </aside>
           <figcaption className="sr-only">Fictional candidate and job posting</figcaption>
