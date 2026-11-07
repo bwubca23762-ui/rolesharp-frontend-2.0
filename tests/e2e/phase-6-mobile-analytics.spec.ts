@@ -155,9 +155,9 @@ test("mobile builder keeps generated resume exports reachable", async ({ page })
   });
   const reviewButton = page.getByRole("button", { name: "Review details" });
   await reviewButton.click();
-  const review = page.getByRole("dialog", { name: "Review your resume details" });
+  const review = page.getByRole("region", { name: "Review your resume details" });
   await expect(review.getByText("Alex Rivera", { exact: true })).toBeVisible();
-  await expect(review.getByRole("button", { name: "Generate resume" })).toBeInViewport();
+  await expect(review.getByRole("button", { name: "Confirm & generate resume" })).toBeInViewport();
   expect(generationRequests).toHaveLength(0);
   await review.getByRole("button", { name: "Edit resume evidence" }).click();
   await expect(page.getByRole("textbox", { name: "Skills", exact: true })).toBeFocused();

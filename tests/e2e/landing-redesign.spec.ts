@@ -24,8 +24,11 @@ for (const viewport of [
   test(`landing redesign is complete and accessible on ${viewport.name}`, async ({ page }) => {
     await page.setViewportSize(viewport);
     await page.goto("/");
+    await page.evaluate(() => document.documentElement.setAttribute("data-theme", "light"));
 
-    await expect(page.getByRole("heading", { level: 1, name: "Tailor your resume to the job." })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "RoleSharp: One step ahead towards a successful career." })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+    await expect(page.locator("#landing-quote")).toHaveCount(1);
     await expect(page.getByRole("link", { name: /Check my resume free/u }).first()).toHaveAttribute("href", "/checker");
     await expect(page.getByRole("link", { name: "Build a tailored resume", exact: true })).toHaveAttribute("href", "/build");
     await expect(page.getByText("Fictional candidate and job posting")).toBeVisible();

@@ -12,7 +12,6 @@
   overflow: hidden;
 }
 .page a {
-  color: inherit;
   text-decoration: none;
 }
 .hero,
@@ -48,13 +47,26 @@
 .close h2 {
   margin: 0;
   color: var(--ink);
-  font: 650 clamp(3rem, 4.6vw, 4.8rem)/0.98 var(--font-display);
+  font: 650 clamp(2.5rem, 3.7vw, 3.8rem)/1.08 var(--font-display);
   letter-spacing: -0.055em;
   text-wrap: balance;
 }
 .hero h1 > span:first-child {
   display: block;
 }
+.heroQuote { margin-top: 24px; }
+.heroQuote :global(.desk-quote) { border: 0; padding: 12px 0; }
+.heroQuote :global(.desk-quote)::before { display: none; }
+.heroQuote :global(.desk-quote-stage),
+.heroQuote :global(.desk-quote-main) { min-height: 7rem; text-align: start; place-items: center start; }
+.heroQuote :global(.desk-quote-question),
+.heroQuote :global(.desk-quote-answer),
+.heroQuote :global(.desk-quote-invitation) { max-width: none; font-size: clamp(1.7rem, 2.7vw, 2.8rem); }
+.heroQuote :global(.desk-quote-beat) { font-size: 3rem; }
+.source { margin: 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: .75rem; }
+.source dt { color: var(--ink); font-weight: 700; }
+.source dd { margin: 4px 0 0; }
+.caption { grid-column: 1 / -1; color: var(--muted); font-size: .75rem; }
 .lede {
   max-width: 42ch;
   margin: 26px 0 30px;
@@ -103,6 +115,7 @@
   margin: 17px 0 0;
 }
 .productStage {
+  margin: 0;
   position: relative;
   display: grid;
   grid-template-columns: minmax(250px, 1fr) minmax(205px, 0.72fr);
@@ -196,8 +209,12 @@
   vertical-align: -3px;
   margin-right: 7px;
 }
-.evidence strong {
+.evidence strong, .evidence h2 {
+  margin: 0;
+  font-family: var(--font-body);
   font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.5;
 }
 .evidence p {
   margin: 8px 0 0;
@@ -311,7 +328,7 @@
   max-width: 28ch;
 }
 .tools {
-  background: #08192d;
+  background: var(--panel);
   width: 100%;
   padding-inline: max(24px, calc((100% - 1240px) / 2));
 }
@@ -448,7 +465,7 @@
   line-height: 1.55;
 }
 .page :focus-visible {
-  outline: 2px solid #b9d6ff;
+  outline: 2px solid var(--primary);
   outline-offset: 4px;
 }
 @media (max-width: 900px) {
@@ -494,7 +511,7 @@
     gap: 42px;
   }
   .hero h1 {
-    font-size: clamp(3rem, 14vw, 4.5rem);
+    font-size: clamp(2.35rem, 10vw, 3rem);
   }
   .productStage {
     grid-template-columns: 1fr;

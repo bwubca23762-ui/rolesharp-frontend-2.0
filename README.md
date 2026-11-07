@@ -36,6 +36,6 @@ filename is historical evidence, not current guidance.
 
 Install dependencies with `npm ci` and ensure PostgreSQL 17 tools are available (set `PG_BIN` to the directory containing `initdb`, `pg_ctl` and `psql` if needed). Run `npm run preview:frontend` and open `http://127.0.0.1:34110/dev/frontend-review`.
 
-Use **Demo sign-in** and the fictional credentials printed by the launcher. The prototype layouts link to the working checker, resume builder, dashboard, jobs, templates and tracker. The local server creates a disposable, seeded PostgreSQL database. Resume generation uses the built-in local tailor and saves results to that database. Restarting the launcher resets the sample workspace.
+Use **Demo sign-in** and the fictional credentials printed by the launcher. The prototype checker, Studio, jobs, workspace and tracker use the application's APIs directly. Choose a template, edit and review your evidence, generate a saved resume, or update an application stage and reload to check persistence. The local server creates a disposable, seeded PostgreSQL database. Resume generation uses the built-in local tailor and saves results to that database. Restarting the launcher resets the sample workspace.
 
 The preview binds to loopback. Live integrations such as mail, payment, and job submission are outside this demo.

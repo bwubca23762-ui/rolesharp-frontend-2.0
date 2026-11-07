@@ -10,7 +10,7 @@ test("the redesign prototype reuses the landing interactions and live review flo
   assert.match(prototype, /<LanguagePicker/);
   assert.match(prototype, /<LandingQuote compact/);
   assert.match(prototype, /\/login\?next=/);
-  assert.match(prototype, /href="\/tracker"/);
+  assert.match(source("app/dev/frontend-review/prototype-workflows.tsx"), /"\/api\/applications/);
   assert.match(source("app/dev/frontend-review/prototype.module.css"), /--ink:\s*var\(--fg\)/);
 });
 
@@ -92,7 +92,7 @@ test("landing sections use one container and a consistent heading hierarchy", ()
   const home = source("app/page.tsx");
   const componentPaths = ["components/marketing/RoleSharpLanding.tsx"];
   assert.match(home, /<MarketingShell>/);
-  assert.equal((home.match(/<RoleSharpLanding \/>/g) ?? []).length, 1);
+  assert.equal((home.match(/<RoleSharpLanding>/g) ?? []).length, 1);
   const hero = source("components/marketing/RoleSharpLanding.tsx");
   assert.equal((hero.match(/<h1\b/g) ?? []).length, 1);
   assert.match(hero, /href="\/checker"/);
@@ -1534,7 +1534,7 @@ test("the proof strip proves the catalogue and invents no other proof", () => {
   // The proof strip is the one band the owner's full-white/full-dark landing
   // keeps as a distinct act: a hairline-bordered section immediately before
   // the marquee.
-  assert.match(home, /<RoleSharpLanding \/>/);
+  assert.match(home, /<RoleSharpLanding>/);
 });
 
 // Phase 3. Eleven pages rendered the same breadcrumb trail six different ways —
@@ -1774,7 +1774,7 @@ test("the method act reads on paper and the templates are real exports", () => {
   assert.match(method, /<section id="method"/);
   // The 2026-10 rebuild: MethodBento carries the #method anchor on the landing
   // now; MethodAct's evidence pair lives on in its component file.
-  assert.match(home, /<RoleSharpLanding \/>/);
+  assert.match(home, /<RoleSharpLanding>/);
   // The pair of examples is the product's whole claim; losing either half
   // turns the act into a feature blurb.
   // The old evidence pair (Grounded edit / No supporting evidence) became the

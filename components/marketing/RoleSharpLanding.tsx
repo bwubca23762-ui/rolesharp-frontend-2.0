@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { ArrowRight, Check, FileSearch, FileText, Search } from "lucide-react";
 import { LandingQuote } from "./LandingQuote";
 import styles from "./RoleSharpLanding.module.css";
@@ -30,13 +31,13 @@ const toolRows = [
   ],
 ];
 
-export function RoleSharpLanding() {
+export function RoleSharpLanding({ children }: { children?: ReactNode }) {
   return (
     <div className={styles.page}>
       <section className={styles.hero} aria-labelledby="landing-title">
         <div className={styles.heroCopy}>
           <h1 id="landing-title">
-            Tailor your resume to the job.
+            RoleSharp: One step ahead towards a successful career.
           </h1>
           <p className={styles.lede}>
             Turn the work you have done into a resume that a hiring team can
@@ -49,13 +50,14 @@ export function RoleSharpLanding() {
             <Link className={styles.secondaryAction} href="/build">
               Build a tailored resume
             </Link>
-            <Link className="sr-only" href="/resume-templates">
+            <Link className={styles.secondaryAction} href="/resume-templates">
               Browse templates
             </Link>
           </div>
           <p className={styles.actionNote}>
             Start with a PDF, DOCX, or pasted text. No card required.
           </p>
+          <div className={styles.heroQuote}><LandingQuote compact /></div>
         </div>
         <figure
           className={styles.productStage}
@@ -101,12 +103,12 @@ export function RoleSharpLanding() {
                 tests.
               </p>
             </div>
-            <dl className="desk-source mt-3 text-xs border-t border-[var(--hairline)] pt-2 text-[#cbd5e1]">
-              <dt className="font-semibold text-[#f1f5f9]">Sample source</dt>
-              <dd className="text-[#cbd5e1]">Onboarding release notes and experiment results</dd>
+            <dl className={styles.source}>
+              <dt>Sample source</dt>
+              <dd>Onboarding release notes and experiment results</dd>
             </dl>
           </aside>
-          <figcaption className="sr-only">Fictional candidate and job posting</figcaption>
+          <figcaption className={styles.caption}>Fictional candidate and job posting</figcaption>
         </figure>
       </section>
 
@@ -123,10 +125,6 @@ export function RoleSharpLanding() {
           <strong>Export-ready</strong>
           <span>Use the same document you preview</span>
         </p>
-      </section>
-
-      <section className={styles.statement}>
-        <LandingQuote compact />
       </section>
 
       <section className={styles.workflow} aria-labelledby="workflow-title">
@@ -222,6 +220,7 @@ export function RoleSharpLanding() {
         </div>
       </section>
 
+      {children}
       <section className={styles.close}>
         <div>
           <FileText size={22} aria-hidden="true" />

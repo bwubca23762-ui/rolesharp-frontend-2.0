@@ -18,7 +18,7 @@ export const landingFaqs: [string, string][] = [
  * FAQ items unbox to hairline rules; the close drops the rounded navy slab
  * for a full-width ink canvas with the page's second permitted glow.
  */
-export function LandingClose() {
+export function LandingClose({ showClose = true }: { showClose?: boolean }) {
   return (
     <>
       <Section asContainer={false} alt>
@@ -43,7 +43,7 @@ export function LandingClose() {
       </Section>
 
       {/* Act 7 — the close. Ink canvas, dimmer echo of the hero glow, one CTA. */}
-      <section className="edt-glow relative overflow-hidden">
+      {showClose && <section className="edt-glow relative overflow-hidden">
         <Container>
           <Reveal variant="rise">
             <div className="relative mx-auto max-w-3xl py-8 text-center md:py-12">
@@ -64,7 +64,7 @@ export function LandingClose() {
             </div>
           </Reveal>
         </Container>
-      </section>
+      </section>}
     </>
   );
 }

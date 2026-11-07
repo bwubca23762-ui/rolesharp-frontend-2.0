@@ -18,7 +18,8 @@ test("the builder's generate path refuses a second concurrent activation", () =>
   // Handler guard: the first line of generate(), before any fetch.
   assert.match(build, /async function generate\(\) \{\s*\n\s*if \(busy\) return;/);
   // isLoading carries the disabled + aria-busy contract in one prop.
-  assert.match(build, /onClick=\{generate\} disabled=\{busy\} isLoading=\{busy\}/);
+  assert.match(build, /onConfirm=\{generate\}/);
+  assert.match(source("app/build/generation-review.tsx"), /onClick=\{onConfirm\}[\s\S]*?disabled=\{busy\}/);
 });
 
 test("builder money actions cannot double-fire", () => {

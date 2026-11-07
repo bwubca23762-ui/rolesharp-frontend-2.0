@@ -21,6 +21,12 @@
 @media (max-width: 650px) { .header { min-height: auto; flex-wrap: wrap; padding: 17px 20px; gap: 17px; }.nav { order: 3; justify-content: flex-start; width: 100%; overflow-x: auto; padding-bottom: 3px; }.account { margin-left: auto; }.home, .screen { width: min(100% - 36px, 1240px); }.hero { min-height: auto; padding-top: 58px; }.heroCopy h1 { font-size: clamp(3.15rem, 14vw, 4.6rem); }.heroArtifact { padding: 34px 0 0; }.heroArtifact::before { inset: 5px 0 0 11%; }.resumeSheet { padding: 21px; }.sequence { grid-template-columns: 1fr; padding: 38px 0 48px; gap: 30px; }.screen { padding: 48px 0 65px; }.pageIntro { margin-bottom: 32px; }.documentPanel, .analysisPanel, .editorPanel, .plan, .workspaceResume { padding: 21px; }.scoreTop { grid-template-columns: 1fr; }.jobFilter { flex-wrap: wrap; }.jobFilter input { min-height: 32px; width: calc(100% - 32px); flex: auto; }.jobRow { grid-template-columns: 38px 1fr; }.fit, .jobRow .buttonQuiet { grid-column: 2; justify-self: start; text-align: left; }.templateGrid { gap: 14px; }.workspaceHero { align-items: flex-start; flex-direction: column; gap: 21px; }.board { overflow-x: auto; grid-template-columns: repeat(3, minmax(230px, 1fr)); padding-bottom: 10px; }.footer { align-items: flex-start; flex-direction: column; padding: 27px 20px; }.footer span { order: 3; } }
 @media (prefers-reduced-motion: reduce) { .prototype *, .prototype *::before, .prototype *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
 .controls { display: flex; align-items: center; gap: 8px; margin-inline-start: auto; }
+.field { display: grid; gap: 7px; margin-block: 14px; color: var(--muted); font-size: .85rem; }
+.field input, .field textarea, .field select { width: 100%; min-width: 0; border: 1px solid var(--line); border-radius: 6px; background: var(--navy); color: var(--ink); padding: 10px; font: inherit; }
+.resumeSheet ul, .resumeSheet > p { font-size: .8rem; line-height: 1.6; }
+.resumeSheet ul { padding-left: 18px; }
+.heroCopy h1 { font-size: clamp(2.5rem, 4.5vw, 4.1rem); line-height: 1.08; }
+.prototype button:disabled { cursor: wait; opacity: .65; }
 .controls :global(.rs-theme-toggle), .controls :global(.rs-language-trigger) { min-width: 44px; min-height: 44px; }
 .heroQuote { --desk-ink: var(--ink); --desk-line: var(--line); margin-top: 26px; }
 .heroQuote :global(.desk-quote) { padding-block: 18px 0; }

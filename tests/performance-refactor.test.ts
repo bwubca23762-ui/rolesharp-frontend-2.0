@@ -168,10 +168,11 @@ test("public conversion surfaces keep truthful proof and interactive templates",
   assert.match(proof, /job markets available/);
   assert.match(proof, /Verifiable product coverage/);
   assert.match(proof, /How RoleSharp verifies claims/);
-  assert.match(home, /<ModernHeroAndMethod[^>]*\/>/);
+  assert.match(home, /<RoleSharpLanding>/);
   // The 2026-10 rebuild brought TemplateStudio back into the landing
   // composition (owner direction), reversing the earlier Ink & Signal cut.
-  assert.match(home, /<TemplateStudio \/>/);
+  assert.doesNotMatch(home, /<TemplateStudio \/>/);
+  assert.match(source("components/marketing/RoleSharpLanding.tsx"), /id="templates-title"/);
   // The hero leads with the outcome headline; the honesty claims survive in
   // the subhead ("No borrowed titles. No invented metrics.").
   assert.match(hero, /evidence you already have/);

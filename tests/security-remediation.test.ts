@@ -1540,7 +1540,7 @@ test("landing promotional links resolve to real surfaces", () => {
   assert.match(topbar, /href: "\/social-rewards"/);
   // The student pill renders only while the program is open.
   assert.match(hero, /studentOfferEnabled/);
-  assert.match(source("app/page.tsx"), /<ModernHeroAndMethod studentOfferEnabled=\{env\.studentOfferEnabled\} \/>/);
+  assert.match(source("app/page.tsx"), /studentOfferEnabled=\{env\.studentOfferEnabled\}/);
 });
 
 // ---- F-01: student copy and the DOCX contradiction ----

@@ -128,7 +128,7 @@ export default function GenerationReview({
   const isJdShort = (request.jdText?.trim().length || 0) < 50;
 
   return (
-    <div id="step-review-confirm" role="dialog" aria-label="Review your resume details" aria-modal="false" className="review-step-workspace card p-5 sm:p-8 space-y-6">
+    <section id="step-review-confirm" aria-label="Review your resume details" className="review-step-workspace card p-5 sm:p-8 space-y-6">
       {/* 1. Header Banner */}
       <header className="border-b border-[var(--hairline)] pb-5 space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -137,7 +137,7 @@ export default function GenerationReview({
             <span>Step 4 • Pre-Generation Verification</span>
           </div>
           <span className="text-xs font-semibold text-[var(--muted-fg)] bg-[var(--surface-2)] px-2.5 py-1 rounded-full border border-[var(--border)]">
-            Draft saved
+            Ready to review
           </span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--fg)]">
@@ -403,6 +403,6 @@ export default function GenerationReview({
           {busy ? "Generating tailored draft…" : "Confirm & generate resume"}
         </Button>
       </footer>
-    </div>
+    </section>
   );
 }
